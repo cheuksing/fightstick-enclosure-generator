@@ -33,6 +33,7 @@
       "@guides": ["src/guides/index.tsx"],
       "@presets": ["src/presets/index.ts"],
       "@tree": ["src/tree.ts"],
+      "@constants": ["src/constants.ts"],
     }
   },
   "include": ["src"]
