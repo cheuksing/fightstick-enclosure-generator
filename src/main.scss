@@ -1,0 +1,162 @@
+@import "@picocss/pico/scss/pico";
+
+/** React blueprint svg **/
+
+.canvas-container {
+  @extend .container-fluid;
+  margin-top: var(--spacing);
+  margin-bottom: var(--spacing);
+
+  header {
+    display: none;
+  }
+  
+  section {
+    margin-bottom: 0;
+  }
+}
+
+/** Content **/
+.content-container {
+  label {
+    margin-left: auto;
+
+    input {
+      margin-left: 0.375em;
+      margin-inline-start: 0.375em;
+      margin-right: 0;
+      margin-inline-end: 0;
+    }
+  }
+
+  p {
+    i {
+      display: inline-block;
+      margin-left: 2px;
+      margin-right: 2px;
+      margin-bottom: -4px;
+      --ggs: .8;
+      color: var(--primary);
+    }
+  }
+}
+
+/** Form **/
+
+.layout-item-container {
+  @extend .grid;
+  @extend article;
+  padding: var(--spacing);
+  margin: var(--spacing) 0;
+  
+  input, select, label, button {
+    margin-bottom: 0;
+  }
+}
+
+.layout-item-offset-top {
+  margin-top: calc(var(--spacing) * 0.25 + 31px);
+}
+
+label {
+  span {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    border-bottom: none !important;
+
+    i {
+      display: inline-flex;
+      margin-left: 8px;
+      margin-bottom: -2px;
+      --ggs: .8;
+      color: var(--primary);
+    }
+  }
+}
+
+/** Info Icon **/
+.gg-info {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 40px
+}
+.gg-info::after,
+.gg-info::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  background: currentColor;
+  left: 7px
+}
+.gg-info::after {
+  bottom: 2px;
+  height: 8px
+}
+.gg-info::before {
+  height: 2px;
+  top: 2px
+}
+
+/** Errors Section **/
+.errors-container {
+  position: sticky;
+  z-index: 99;
+  top: var(--spacing);
+  border: var(--border-width) solid var(--form-element-invalid-border-color);
+}
+
+/** Nav **/
+
+.github-icon {
+  margin-right: var(--nav-element-spacing-horizontal);
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
+/** Tabs **/
+
+$tabBorder: 4px;
+$tabBorderGap: 4px;
+$tabMarginBottom: var(--typography-spacing-vertical);
+
+.tabs {
+  display: flex;
+  padding: 0;
+}
+
+.tab {
+  min-width: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding-left: var(--nav-element-spacing-horizontal);
+  padding-right: var(--nav-element-spacing-horizontal);
+  padding-top: var(--nav-element-spacing-vertical) ;
+  padding-bottom: $tabBorderGap;
+  margin-bottom: $tabMarginBottom;
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom: $tabBorder solid var(--primary);
+  font-weight: bold;
+  margin-bottom: calc($tabMarginBottom - $tabBorder);
+}
+
+/** Modal **/
+article {
+  header {
+    margin-bottom: var(--spacing);
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    
+
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@fasteners/*": ["src/fasteners/*"],
+      "@parts/*": ["src/parts/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@config": ["src/config.ts"],
+      "@schema": ["src/schema.ts"],
+      "@guides": ["src/guides/index.tsx"],
+      "@presets": ["src/presets/index.ts"],
+      "@tree": ["src/tree.ts"],
+    }
+  },
+  "include": ["src"]
+}

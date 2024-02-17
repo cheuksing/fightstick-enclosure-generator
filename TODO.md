@@ -1,0 +1,17 @@
+- [X] Error handling (zod.parse)
+- [X] show red border input when error
+- [X] a <article /> to show all error (zod error flatten)
+- [X] a modal to show guide
+- [X] write a guide
+- [X] debouce build tree (slow in perf)
+- [] setup a github page using pnpm / github page action ci
+- [X] add a json editor (raw data editor)
+- [X] write description
+- [X] hover to show description
+- [X] write 3 line of text to breifly explain how to use (and what is this site)
+- [X] Fix brook layout
+- [X] Fix joystick layout
+- [X] Fix merge corner logic
+- [] Enhance front side plate buttons
+- [X] Fix on change 0
+- [X] fix palmRest 0
