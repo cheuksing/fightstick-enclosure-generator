@@ -133,8 +133,8 @@ export function cadModelTree(tree: ModelTree, config: Config) {
 
   const topPlate = model.clone(tree.models.topPlate);
 
-  if (topPlate.models?.m4) {
-    topPlate.models.m4.layer = LayerColor.red;
+  if (topPlate.models?.m4c) {
+    topPlate.models.m4c.layer = LayerColor.red;
   }
 
   if (topPlate.models?.border) {

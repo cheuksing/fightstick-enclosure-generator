@@ -5,7 +5,7 @@ import {screwHoles} from '@fasteners/screw';
 import {layout, walkLayout} from '@helpers/layout';
 import {buttonSpec} from './sanwa';
 
-export function clearPlate(): BaseModel {
+export function clearPlate() {
   const config = getConfig();
 
   const {clearPlateWidth, clearPlateHeight, innerRadius, clearPlateScrewPositions} = config;
@@ -81,22 +81,17 @@ export function clearPlate(): BaseModel {
     },
   };
 
-  const m: BaseModel = {
+  const m = {
     models: {
       border,
+      m4: {
+        ...screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}),
+        origin: [-toAbsolutePosition[0], -toAbsolutePosition[1]],
+      },
+      cutout: layout({relativeOrigin: [clearPlateWidth / 2, clearPlateHeight / 2], isClearPlate: true}),
     },
+    origin: toAbsolutePosition,
   };
-
-  const m4 = screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'});
-
-  m.models.m4 = {
-    ...m4,
-    origin: [-toAbsolutePosition[0], -toAbsolutePosition[1]],
-  };
-
-  model.moveRelative(m, toAbsolutePosition);
-
-  m.models.cutout = layout({relativeOrigin: [clearPlateWidth / 2, clearPlateHeight / 2], isClearPlate: true});
 
   return m;
 }

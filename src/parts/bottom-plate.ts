@@ -2,7 +2,7 @@ import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
 import {common} from './common';
 
-export function bottomPlate(): BaseModel {
+export function bottomPlate() {
   const config = getConfig();
 
   const {cornerScrewPositions} = config;
@@ -18,7 +18,7 @@ export function bottomPlate(): BaseModel {
     cornerScrewPositions.frontRight.bottom2,
   ];
 
-  const m: BaseModel = {
+  const m = {
     models: {
       border: common(),
       m4: screwHoles({points: screws, size: 'm4'}),

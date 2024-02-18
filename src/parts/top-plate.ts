@@ -3,8 +3,8 @@ import {screwHoles} from '@fasteners/screw';
 import {common} from './common';
 import {layout} from '@helpers/layout';
 
-export function topPlate(): BaseModel {
-  const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest} = getConfig();
+export function topPlate() {
+  const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest, clearPlateScrewPositions} = getConfig();
 
   const screws = [
     cornerScrewPositions.backLeft.top,
@@ -17,10 +17,11 @@ export function topPlate(): BaseModel {
 
   const dy = (clearPlateHeight / 2) + borders + palmRest;
 
-  const m: BaseModel = {
+  const m = {
     models: {
       border,
-      m4: screwHoles({points: screws, size: 'm4'}),
+      m4c: screwHoles({points: screws, size: 'm4'}),
+      m4: screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}),
       cutout: layout({relativeOrigin: [width / 2, dy], isClearPlate: false}),
     },
   };

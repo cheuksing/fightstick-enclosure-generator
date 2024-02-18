@@ -4,15 +4,6 @@ import {value} from 'vite/client';
 import type {IModel} from 'makerjs';
 
 declare global {
-
-  type BaseModel = {
-    models: {
-      border?: IModel;
-      m4?: IModel;
-      cutout?: IModel;
-    };
-  } & IModel;
-
   declare module '*.md' {
     // "unknown" would be more detailed depends on how you structure frontmatter
     const attributes: Record<string, unknown>;

@@ -67,7 +67,7 @@ function frontLeftHorizontalScrews(layerIdx: number, originalBorder: IModel) {
   return originalBorder;
 }
 
-function frontLeftCorner(layerIdx: number): BaseModel {
+function frontLeftCorner(layerIdx: number) {
   const {height} = getConfig();
 
   const [w, h] = frontLeftBox();
@@ -161,7 +161,7 @@ function backLeftHorizontalScrews(layerIdx: number, originalBorder: IModel) {
   return originalBorder;
 }
 
-function backLeftCorner(layerIdx: number): BaseModel {
+function backLeftCorner(layerIdx: number) {
   const [w, h] = backLeftBox();
 
   const rect = new models.Rectangle(w, h);
