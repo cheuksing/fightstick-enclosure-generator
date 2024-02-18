@@ -135,7 +135,7 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
         </div>
       ))}
       <h6>
-            Edit positions of Layout Items, such as buttons / sticks / brook pcb.
+        Edit positions of Layout Items, such as buttons / sticks / brook pcb.
       </h6>
       {Object.keys(layoutItemState).map(k => (
         <LayoutItemField

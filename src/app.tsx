@@ -8,48 +8,56 @@ import {Nav} from './components/nav';
 import {Content} from './components/content';
 import {useRoute, Route, useLocation} from 'wouter';
 import {Guides} from '@guides';
-import {presets} from '@presets';
+import {presets, presetsMap} from '@presets';
+
+const defaultPreset = presets[0].id;
 
 export function App() {
-  const [config, setConfig] = useState<Config>(presets[0].config);
-  const [debouncedConfig] = useDebounce(config, 1000);
   const [viewMode, setViewMode] = useState<'preview' | 'cad'>('preview');
   const [debouncedViewMode] = useDebounce(viewMode, 300);
 
-  const tree = useMemo(() => buildModelTree(debouncedConfig), [debouncedConfig]);
-
-  const [path, navigate] = useLocation();
+  const [path] = useLocation();
 
   const [match, parameters] = useRoute('/preset/:id');
 
-  useEffect(() => {
+  const presetId = useMemo(() => {
     if (!match) {
-      return;
+      return defaultPreset;
     }
 
     const id = parameters.id;
     if (!id) {
-      return;
+      return defaultPreset;
     }
 
     const hit = presets.find(preset => preset.id === id);
 
-    if (!hit) {
-      navigate('/', {replace: true});
-      return;
-    }
+    return hit?.id ?? defaultPreset;
+  }, [path]);
 
-    setConfig(hit.config);
-    window.scrollTo(0, 0);
-  }, [path]); // Only run when route changes
+  const [config, setConfig] = useState<Config>(presetsMap[presetId].config);
+  const [debouncedConfig] = useDebounce(config, 300);
+
+  const tree = useMemo(() => buildModelTree(debouncedConfig), [debouncedConfig]);
+
+  const presetConfig = useMemo(() => {
+    const preset = presetsMap[presetId];
+    return preset.config;
+  }, [presetId]);
+
+  useEffect(() => {
+    console.log('presetId', presetId);
+    console.log('config', config);
+    console.log('presetConfig', presetConfig);
+  }, [presetId, config, presetConfig]);
 
   return (
     <div>
       <Nav />
       <Canvas mode={debouncedViewMode} tree={tree} config={debouncedConfig} />
       <div className='container'>
-        <Content config={config} tree={tree} viewMode={viewMode} onViewModeChange={setViewMode} />
-        <Editor config={config} onConfigChange={setConfig} />
+        <Content config={debouncedConfig} tree={tree} viewMode={viewMode} onViewModeChange={setViewMode} />
+        <Editor presetConfig={presetConfig} onConfigChange={setConfig} key={presetId} />
       </div>
       <Route path='/guides/:id' component={Guides} />
     </div>

@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {type z} from 'zod';
 
-export function useValidateInputValue<T>(onValidateInputChange: (value: T) => void, validateInput: T, schema: z.ZodType<T>) {
-  const [inputValue, setInputValue] = useState<Record<keyof T, any>>(validateInput);
+export function useValidateInputValue<T>(onValidateInputChange: (value: T) => void, defaultInputValue: T, schema: z.ZodType<T>) {
+  const [inputValue, setInputValue] = useState<Record<keyof T, any>>(defaultInputValue);
   const [errors, setErrors] = useState<z.typeToFlattenedError<any> | undefined>();
 
-  useEffect(() => {
-    const result = schema.safeParse(inputValue);
+  const onUpdate = useCallback((s: typeof inputValue) => {
+    const result = schema.safeParse(s);
     if (result.success) {
       setErrors(undefined);
       onValidateInputChange(result.data);
@@ -14,6 +14,10 @@ export function useValidateInputValue<T>(onValidateInputChange: (value: T) => vo
       const errors = result.error.flatten();
       setErrors(errors);
     }
+  }, [schema, onValidateInputChange]);
+
+  useEffect(() => {
+    onUpdate(inputValue);
   }, [inputValue]);
 
   return {inputValue, setInputValue, errors};

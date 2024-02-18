@@ -7,3 +7,5 @@ export const presets = [
   crossupPreset,
   allButtonCrossupPreset,
 ];
+
+export const presetsMap = Object.fromEntries(presets.map(preset => [preset.id, preset]));
