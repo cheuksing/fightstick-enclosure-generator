@@ -26,6 +26,10 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
     onChange(presetConfig);
   }, [presetConfig]);
 
+  useEffect(() => {
+    onConfigChange(value);
+  }, [value]);
+
   return (
     <div>
       <Errors errors={errors} />
