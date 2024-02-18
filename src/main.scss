@@ -114,6 +114,10 @@ label {
   border: var(--border-width) solid var(--form-element-invalid-border-color);
 }
 
+details[role=list] summary + ul {
+  z-index: 100;
+}
+
 /** Nav **/
 
 .github-icon {

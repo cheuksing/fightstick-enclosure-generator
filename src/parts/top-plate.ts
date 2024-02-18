@@ -1,7 +1,7 @@
 import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
 import {common} from './common';
-import {layout} from '@layouts/index';
+import {layout} from '@helpers/layout';
 
 export function topPlate(): BaseModel {
   const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest} = getConfig();

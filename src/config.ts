@@ -120,8 +120,6 @@ export function computeConfig(config: Config) {
   const isClearPlateBackScrewCloserToCenterThanCornerScrew = measure.pointDistance(clearPlateScrewPositions.backLeft, clearPlateScrewPositions.backRight) < measure.pointDistance(cornerScrewPositions.backLeft.top, cornerScrewPositions.backRight.top);
   const isClearPlateBackScrewCloserToBackThanFront = centerY > clearPlateScrewPositions.backLeft[1];
 
-  console.log('backLeftC', cornerScrewPositions.backLeft);
-
   const sidePlateScrewPositions = {
     front: {
       left: [clearPlateScrewPositions.frontLeft[0] + conrerScrewMagicNumber, clearPlateScrewPositions.frontLeft[1]],

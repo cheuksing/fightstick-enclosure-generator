@@ -2,7 +2,7 @@ import {models, model, chain, measure, paths, point} from 'makerjs';
 import {filletG2Continunity} from '@helpers/fillet';
 import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
-import {layout, walkLayout} from '@layouts/index';
+import {layout, walkLayout} from '@helpers/layout';
 import {buttonSpec} from './sanwa';
 
 export function clearPlate(): BaseModel {
