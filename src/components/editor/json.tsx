@@ -6,20 +6,22 @@ import {useValidateInputValue} from './utils';
 function useJsonParser(initialString: string, onErrorsChange: (errors: z.typeToFlattenedError<Config> | undefined) => void) {
   const [jsonError, setJsonError] = useState<boolean>(false);
   const [jsonString, setJsonString] = useState<string>(initialString);
-  const [jsonObject, setJsonObject] = useState<unknown>({});
+  const [jsonObject, setJsonObject] = useState<unknown>(JSON.parse(initialString));
 
-  useEffect(() => {
+  const onJsonStringChange = useCallback((s: string) => {
+    setJsonString(s);
+
     try {
-      const parsedObject = JSON.parse(jsonString) as unknown;
+      const parsedObject = JSON.parse(s) as unknown;
       setJsonObject(parsedObject);
       setJsonError(false);
     } catch {
       onErrorsChange({formErrors: ['Invalid JSON'], fieldErrors: {}});
       setJsonError(true);
     }
-  }, [jsonString]);
+  }, []);
 
-  return {jsonString, setJsonString, jsonObject, jsonError};
+  return {jsonString, setJsonString: onJsonStringChange, jsonObject, jsonError};
 }
 
 type EditorJsonProps = {

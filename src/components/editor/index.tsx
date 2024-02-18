@@ -30,8 +30,8 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
     <div>
       <Errors errors={errors} />
       <Tabs tabs={editorTabs} currentTab={currentTab} onTabChange={setCurrentTab} />
-      {currentTab === 'form' && <EditorForm config={value} onConfigChange={onConfigChange} onErrorsChange={setErrors} />}
-      {currentTab === 'raw' && <EditorJson config={value} onConfigChange={onConfigChange} onErrorsChange={setErrors} />}
+      {currentTab === 'form' && <EditorForm config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
+      {currentTab === 'raw' && <EditorJson config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
     </div>
   );
 };
