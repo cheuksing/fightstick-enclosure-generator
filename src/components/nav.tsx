@@ -13,7 +13,7 @@ export function Nav() {
         </li>
         <li>
           <a href='https://github.com/cheuksing/fightstick-enclosure-generator' target='_blank'>
-            <img width={36} height={36} className='github-icon' src={`${basePath}/github-mark-white.svg`} />
+            <img width={36} height={36} className='github-icon' alt='github icon' src={`${basePath}/github-mark-white.svg`} />
           </a>
         </li>
       </ul>

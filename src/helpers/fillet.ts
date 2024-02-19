@@ -128,8 +128,7 @@ export function filletG2Continunity(c: IChain, filletRadius: number, strength = 
     const bezier0 = new models.BezierCurve([p0, p1, p2, p3]);
     const bezier1 = new models.BezierCurve([p3, p4, p5, p6]);
 
-    // @ts-expect-error - for debugging only
-    if (window.debugG2Fillet) {
+    if (import.meta.env?.DEBUG_G2_FILLET === 'true') {
       const refLine = new models.ConnectTheDots(false, [p0, p1, p2, p3, p4, p5, p6]);
       // @ts-expect-error - change model color for debugging
       refLine.layer = 'yellow';

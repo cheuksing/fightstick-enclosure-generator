@@ -22,8 +22,6 @@ export function buildModelTree(config: Config) {
     },
   };
 
-  console.log('buildModelTree', model);
-
   return model;
 }
 

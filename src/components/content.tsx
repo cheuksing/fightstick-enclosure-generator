@@ -34,7 +34,7 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-const closeClosestDetails = (event: React.MouseEvent<HTMLAnchorElement>) => {
+const closeClosestDetails = (event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
   const element = event.target as HTMLAnchorElement;
   const details = element?.closest?.('details') as HTMLDetailsElement | undefined;
   if (details) {
@@ -43,14 +43,14 @@ const closeClosestDetails = (event: React.MouseEvent<HTMLAnchorElement>) => {
 };
 
 export function Content({config, tree, viewMode, onViewModeChange}: ContentProps) {
-  const onDownloadConfig = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+  const onDownloadConfig = useCallback((event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
     closeClosestDetails(event);
 
     const blob = new Blob([JSON.stringify(config, null, 2)], {type: 'application/json'});
     downloadBlob(blob, 'config.json');
   }, [config]);
 
-  const onDownloadDxf = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+  const onDownloadDxf = useCallback((event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
     closeClosestDetails(event);
 
     const cadTree = cadModelTree(tree, config);
@@ -81,7 +81,7 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
           <summary aria-haspopup='listbox' role='button'>Try Presets</summary>
           <ul role='listbox'>
             {presets.map(preset => (
-              <li key={preset.id}>
+              <li key={preset.id} role='option'>
                 <Link href={`/preset/${preset.id}`} onClick={closeClosestDetails}>{preset.name}</Link>
               </li>
             ))}
@@ -90,11 +90,11 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
         <details role='list'>
           <summary aria-haspopup='listbox' role='button'>Download</summary>
           <ul role='listbox'>
-            <li>
-              <a onClick={onDownloadDxf}>CAD Files (.DXF)</a>
+            <li role='option'>
+              <div className='button-dropdown-a' onClick={onDownloadDxf}>CAD Files (.DXF)</div>
             </li>
-            <li>
-              <a onClick={onDownloadConfig}>Config (.json)</a>
+            <li role='option'>
+              <div className='button-dropdown-a' onClick={onDownloadConfig}>Config (.json)</div>
             </li>
           </ul>
         </details>
