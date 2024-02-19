@@ -9,6 +9,10 @@ type CanvasProps = {
   tree: ReturnType<typeof buildModelTree>;
 };
 
+const canvasConfig = {fitOnScreen: true};
+
+const MemoBlueprint = React.memo(Blueprint, (previousProps, nextProps) => previousProps.model === nextProps.model);
+
 export const Canvas: React.FC<CanvasProps> = ({mode, tree, config}) => {
   const model = useMemo(() => {
     if (mode === 'cad') {
@@ -20,7 +24,7 @@ export const Canvas: React.FC<CanvasProps> = ({mode, tree, config}) => {
 
   return (
     <div className='canvas-container'>
-      <Blueprint model={model} options={{fitOnScreen: true}} />
+      <MemoBlueprint model={model} options={canvasConfig} />
     </div>
   );
 };

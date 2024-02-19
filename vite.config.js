@@ -9,4 +9,7 @@ const markdownPlugin = md.default({
 export default defineConfig({
   base: '/fightstick-enclosure-generator/',
   plugins: [tsconfigPaths(), markdownPlugin],
+  build: {
+    sourcemap: true,
+  },
 });

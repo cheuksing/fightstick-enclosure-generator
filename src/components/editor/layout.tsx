@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {layoutItemSchema, type LayoutItem} from '@schema';
 import {z} from 'zod';
 import {BooleanField, EnumField, NumberField} from './fields';
@@ -73,7 +73,13 @@ export const LayoutItemField: React.FC<LayoutItemProps> = ({uniqueKey, value, on
     setState(nextState);
   }, []);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
+
     onChange(uniqueKey, state);
   }, [uniqueKey, value, state, onChange]);
 
@@ -90,6 +96,10 @@ export const LayoutItemField: React.FC<LayoutItemProps> = ({uniqueKey, value, on
     const errors = Object.keys(result.error.flatten().fieldErrors ?? {});
     return new Set(errors);
   }, [state]);
+
+  useEffect(() => {
+    isInitialMount.current = false;
+  }, []);
 
   return (
     <div className='layout-item-container'>

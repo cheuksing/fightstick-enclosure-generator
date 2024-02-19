@@ -45,19 +45,13 @@ export function App() {
     return preset.config;
   }, [presetId]);
 
-  useEffect(() => {
-    console.log('presetId', presetId);
-    console.log('config', config);
-    console.log('presetConfig', presetConfig);
-  }, [presetId, config, presetConfig]);
-
   return (
     <div>
       <Nav />
       <Canvas mode={debouncedViewMode} tree={tree} config={debouncedConfig} />
       <div className='container'>
         <Content config={debouncedConfig} tree={tree} viewMode={viewMode} onViewModeChange={setViewMode} />
-        <Editor presetConfig={presetConfig} onConfigChange={setConfig} key={presetId} />
+        <Editor presetConfig={presetConfig} onConfigChange={setConfig} />
       </div>
       <Route path='/guides/:id' component={Guides} />
     </div>

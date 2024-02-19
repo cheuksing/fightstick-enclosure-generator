@@ -1,7 +1,8 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {type z} from 'zod';
 
 export function useValidateInputValue<T>(onValidateInputChange: (value: T) => void, defaultInputValue: T, schema: z.ZodType<T>) {
+  const isInitialMount = useRef(true);
   const [inputValue, setInputValue] = useState<Record<keyof T, any>>(defaultInputValue);
   const [errors, setErrors] = useState<z.typeToFlattenedError<any> | undefined>();
 
@@ -17,8 +18,16 @@ export function useValidateInputValue<T>(onValidateInputChange: (value: T) => vo
   }, [schema, onValidateInputChange]);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
+
     onUpdate(inputValue);
   }, [inputValue]);
+
+  useEffect(() => {
+    isInitialMount.current = false;
+  }, []);
 
   return {inputValue, setInputValue, errors};
 }

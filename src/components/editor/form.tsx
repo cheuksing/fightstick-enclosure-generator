@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {schema, type Config, type LayoutItem, refinedSchema} from '@schema';
 import {type z} from 'zod';
 import {NumberField} from './fields';
@@ -41,6 +41,8 @@ type EditorFormProps = {
 export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, onErrorsChange}) => {
   const {inputValue, setInputValue, errors} = useValidateInputValue<Config>(onConfigChange, config, refinedSchema);
 
+  const isInitialMount = useRef(true);
+
   const onBaseFieldsChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const target = event.target as HTMLInputElement;
     setInputValue(s => ({
@@ -66,9 +68,13 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
       delete nextState[k]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
       return nextState;
     });
-  }, [layoutItemState]);
+  }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
+
     setInputValue(s => ({
       ...s,
       layout: Object.keys(layoutItemState).sort().map(k => ({
@@ -82,6 +88,10 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
   useEffect(() => {
     onErrorsChange(errors);
   }, [errors, onErrorsChange]);
+
+  useEffect(() => {
+    isInitialMount.current = false;
+  }, []);
 
   const BaseInputFields = baseFields.map(key => {
     const value = inputValue[key] as number;

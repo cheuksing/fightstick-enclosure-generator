@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {type Config} from '@schema';
 import {type z} from 'zod';
 import {Errors} from '../errors';
@@ -22,13 +22,27 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
 
   const [value, onChange] = useState<Config>(presetConfig);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
+
     onChange(presetConfig);
   }, [presetConfig]);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
+
     onConfigChange(value);
   }, [value]);
+
+  useEffect(() => {
+    isInitialMount.current = false;
+  }, []);
 
   return (
     <div>
