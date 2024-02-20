@@ -260,10 +260,10 @@ export function corners(): AllCornersModel {
   for (let i = 0; i < requriedCornerLayers; i++) {
     let corners: CornersModel;
 
-    const left = leftStandoff(i);
-    const right = mirrorY(left);
-
     if (isOverlap) {
+      const left = leftStandoff(i);
+      const right = mirrorY(left);
+
       corners = {
         models: {
           left,
@@ -278,8 +278,8 @@ export function corners(): AllCornersModel {
         models: {
           frontLeft: fl,
           backLeft: bl,
-          frontRight: mirrorY(frontLeftCorner(i)),
-          backRight: mirrorY(backLeftCorner(i)),
+          frontRight: mirrorY(fl),
+          backRight: mirrorY(bl),
         },
       };
     }
