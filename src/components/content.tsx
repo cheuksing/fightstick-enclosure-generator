@@ -7,7 +7,7 @@ import {exporter} from 'makerjs';
 
 type ContentProps = {
   config: Config;
-  tree: ModelTree;
+  tree?: ModelTree;
   viewMode: 'preview' | 'cad';
   onViewModeChange: (mode: 'preview' | 'cad') => void;
 };
@@ -51,6 +51,10 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
   }, [config]);
 
   const onDownloadDxf = useCallback((event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
+    if (!tree) {
+      return;
+    }
+
     closeClosestDetails(event);
 
     const cadTree = cadModelTree(tree, config);
@@ -91,10 +95,10 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
           <summary aria-haspopup='listbox' role='button'>Download</summary>
           <ul role='listbox'>
             <li role='option'>
-              <div className='button-dropdown-a' onClick={onDownloadDxf}>CAD Files (.DXF)</div>
+              <a onClick={onDownloadDxf} aria-busy={!tree}>CAD Files (.DXF)</a>
             </li>
             <li role='option'>
-              <div className='button-dropdown-a' onClick={onDownloadConfig}>Config (.json)</div>
+              <a onClick={onDownloadConfig}>Config (.json)</a>
             </li>
           </ul>
         </details>

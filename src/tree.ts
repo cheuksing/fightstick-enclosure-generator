@@ -4,15 +4,15 @@ import {sidePlates} from '@parts/side-plate';
 import {bottomPlate} from '@parts/bottom-plate';
 import {topPlate} from '@parts/top-plate';
 import {type IModel, measure, model} from 'makerjs';
-import {setConfig} from '@config';
+import {computeAndSetConfig} from '@config';
 import {type Config} from '@schema';
 import {brookStandoff} from '@parts/brook';
 import {LayerColor} from '@helpers/color';
 
 export function buildModelTree(config: Config) {
-  setConfig(config); // Compute config
+  const computedConfig = computeAndSetConfig(config); // Compute config
 
-  const model = {
+  const tree = {
     models: {
       corners: corners(),
       sidePlates: sidePlates(),
@@ -22,10 +22,10 @@ export function buildModelTree(config: Config) {
     },
   };
 
-  return model;
+  return {tree, computedConfig};
 }
 
-export type ModelTree = ReturnType<typeof buildModelTree>;
+export type ModelTree = ReturnType<typeof buildModelTree>['tree'];
 
 export function previewModelTree(tree: ModelTree) {
   return tree;

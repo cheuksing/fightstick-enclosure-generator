@@ -1,7 +1,7 @@
 import {Canvas} from './components/canvas';
 import {Editor} from './components/editor';
 import {useEffect, useMemo, useState} from 'react';
-import {buildModelTree} from '@tree';
+import {type ModelTree} from '@tree';
 import {type Config} from '@schema';
 import {useDebounce} from 'use-debounce';
 import {Nav} from './components/nav';
@@ -10,7 +10,12 @@ import {useRoute, Route, useLocation} from 'wouter';
 import {Guides} from '@guides';
 import {presets, presetsMap} from '@presets';
 
+import BuildModelTreeWorker from './tree.worker?worker';
+import {type ComputedConfig, setComputedConfig} from '@config';
+
 const defaultPreset = presets[0].id;
+
+const buildModelTreeWorker = new BuildModelTreeWorker();
 
 export function App() {
   const [viewMode, setViewMode] = useState<'preview' | 'cad'>('preview');
@@ -38,7 +43,33 @@ export function App() {
   const [config, setConfig] = useState<Config>(presetsMap[presetId].config);
   const [debouncedConfig] = useDebounce(config, 300);
 
-  const tree = useMemo(() => buildModelTree(debouncedConfig), [debouncedConfig]);
+  const [tree, setTree] = useState<ModelTree | undefined>();
+
+  useEffect(() => {
+    const fn = (event: MessageEvent) => {
+      const data = event.data as {config: Config; computedConfig: ComputedConfig; tree: ModelTree} | {error: Error};
+
+      if ('error' in data) {
+        console.error(data.error);
+        setTree(undefined);
+        return;
+      }
+
+      const {config, computedConfig, tree} = data;
+      setComputedConfig({changedConfig: config, computedConfig});
+      setTree(tree);
+    };
+
+    buildModelTreeWorker.addEventListener('message', fn);
+
+    return () => {
+      buildModelTreeWorker.removeEventListener('message', fn);
+    };
+  }, [setTree]);
+
+  useEffect(() => {
+    buildModelTreeWorker.postMessage(debouncedConfig);
+  }, [debouncedConfig]);
 
   const presetConfig = useMemo(() => {
     const preset = presetsMap[presetId];

@@ -174,9 +174,28 @@ export function computeConfig(config: Config) {
 let currentUserConfig: Config = presets[0].config;
 let currentConfig = computeConfig(currentUserConfig);
 
-export const setConfig = (newConfig: Partial<Config>) => {
+export const computeAndSetConfig = (newConfig: Partial<Config>) => {
   currentUserConfig = {...currentUserConfig, ...newConfig};
   currentConfig = computeConfig(currentUserConfig);
+  return currentConfig;
+};
+
+export type ComputedConfig = ReturnType<typeof computeConfig>;
+
+export const setComputedConfig = ({
+  changedConfig,
+  computedConfig,
+}: {
+  changedConfig?: Partial<Config>;
+  computedConfig?: ComputedConfig;
+}) => {
+  if (changedConfig) {
+    currentUserConfig = {...currentUserConfig, ...changedConfig};
+  }
+
+  if (computedConfig) {
+    currentConfig = computedConfig;
+  }
 };
 
 export const getConfig = () => currentConfig;

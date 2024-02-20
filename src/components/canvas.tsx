@@ -1,12 +1,12 @@
 import Blueprint from 'react-blueprint-svg';
-import {type buildModelTree, previewModelTree, cadModelTree} from '@tree';
+import {previewModelTree, cadModelTree, type ModelTree} from '@tree';
 import React, {useMemo} from 'react';
 import {type Config} from '@schema';
 
 type CanvasProps = {
   mode: 'preview' | 'cad';
   config: Config;
-  tree: ReturnType<typeof buildModelTree>;
+  tree?: ModelTree;
 };
 
 const canvasConfig = {fitOnScreen: true};
@@ -15,6 +15,10 @@ const MemoBlueprint = React.memo(Blueprint, (previousProps, nextProps) => previo
 
 export const Canvas: React.FC<CanvasProps> = ({mode, tree, config}) => {
   const model = useMemo(() => {
+    if (!tree) {
+      return {};
+    }
+
     if (mode === 'cad') {
       return cadModelTree(tree, config);
     }

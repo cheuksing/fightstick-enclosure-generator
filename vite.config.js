@@ -12,4 +12,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  worker: {
+    plugins: () => [tsconfigPaths()],
+  },
 });
