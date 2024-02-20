@@ -1,0 +1,26 @@
+diff --git a/dist/index.es.js b/dist/index.es.js
+index 0a88a1019b283f61dbea6e04516be6a64f3ee3d1..7b2d675be483ac6eef3c302972e9e581506c51ca 100644
+--- a/dist/index.es.js
++++ b/dist/index.es.js
+@@ -4613,7 +4613,7 @@ function renderOptions(view, measurement) {
+         flow: { size: flowSize },
+         svgAttrs: { "id": 'drawing' },
+         fontSize: fontSize + 'px',
+-        useSvgPathOnly: false
++        useSvgPathOnly: true
+     };
+ }
+ 
+diff --git a/dist/index.js b/dist/index.js
+index d4b0d24a98d8e7920bfa5b9a90b06ab30aaefdf7..7874cbb4594c4eff5d3cc301d58c47f54086bb28 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -4617,7 +4617,7 @@ function renderOptions(view, measurement) {
+         flow: { size: flowSize },
+         svgAttrs: { "id": 'drawing' },
+         fontSize: fontSize + 'px',
+-        useSvgPathOnly: false
++        useSvgPathOnly: true
+     };
+ }
+ 

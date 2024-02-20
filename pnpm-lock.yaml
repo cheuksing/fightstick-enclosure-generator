@@ -1,5 +1,14 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+patchedDependencies:
+  react-blueprint-svg@0.10.0:
+    hash: 7xrtasixd6tzoiistqnzhfefle
+    path: patches/react-blueprint-svg@0.10.0.patch
+
 dependencies:
   '@picocss/pico':
     specifier: ^2.0.3
@@ -12,7 +21,7 @@ dependencies:
     version: 16.14.0
   react-blueprint-svg:
     specifier: ^0.10.0
-    version: 0.10.0(makerjs@0.17.6)(prop-types@15.8.1)(react-dom@16.14.0)(react@16.14.0)
+    version: 0.10.0(patch_hash=7xrtasixd6tzoiistqnzhfefle)(makerjs@0.17.6)(prop-types@15.8.1)(react-dom@16.14.0)(react@16.14.0)
   react-dom:
     specifier: ^16.4.1
     version: 16.14.0(react@16.14.0)
@@ -3467,7 +3476,7 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /react-blueprint-svg@0.10.0(makerjs@0.17.6)(prop-types@15.8.1)(react-dom@16.14.0)(react@16.14.0):
+  /react-blueprint-svg@0.10.0(patch_hash=7xrtasixd6tzoiistqnzhfefle)(makerjs@0.17.6)(prop-types@15.8.1)(react-dom@16.14.0)(react@16.14.0):
     resolution: {integrity: sha512-5XqeJvyoXRKmelHWxMlOs9K/S83xwmvcKCxrx/rx2sC/HYNL7w9DhWwYnDZnlkbYhelF+hlkmNK3m9aqQgQd5g==}
     engines: {node: '>=8', npm: '>=5'}
     peerDependencies:
@@ -3487,6 +3496,7 @@ packages:
     transitivePeerDependencies:
       - react-native
     dev: false
+    patched: true
 
   /react-dom@16.14.0(react@16.14.0):
     resolution: {integrity: sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==}
@@ -3499,6 +3509,7 @@ packages:
       react: 16.14.0
       scheduler: 0.19.1
     dev: false
+    bundledDependencies: false
 
   /react-from-dom@0.6.2(react@16.14.0):
     resolution: {integrity: sha512-qvWWTL/4xw4k/Dywd41RBpLQUSq97csuv15qrxN+izNeLYlD9wn5W8LspbfYe5CWbaSdkZ72BsaYBPQf2x4VbQ==}
@@ -3540,6 +3551,7 @@ packages:
       object-assign: 4.1.1
       prop-types: 15.8.1
     dev: false
+    bundledDependencies: false
 
   /read-pkg-up@7.0.1:
     resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}
@@ -4515,7 +4527,3 @@ packages:
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
