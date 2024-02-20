@@ -23,7 +23,7 @@
     "xo": "^0.56.0"
   },
   "dependencies": {
-    "@picocss/pico": "^1.5.11",
+    "@picocss/pico": "^2.0.3",
     "makerjs": "^0.17.0",
     "react": "^16.4.1",
     "react-blueprint-svg": "^0.10.0",

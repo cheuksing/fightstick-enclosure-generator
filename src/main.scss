@@ -4,8 +4,8 @@
 
 .canvas-container {
   @extend .container-fluid;
-  margin-top: var(--spacing);
-  margin-bottom: var(--spacing);
+  margin-top: var(--pico-spacing);
+  margin-bottom: var(--pico-spacing);
 
   header {
     display: none;
@@ -34,9 +34,9 @@
       display: inline-block;
       margin-left: 2px;
       margin-right: 2px;
-      margin-bottom: -4px;
+      margin-bottom: -2px;
       --ggs: .8;
-      color: var(--primary);
+      color: var(--pico-primary);
     }
   }
 }
@@ -46,8 +46,8 @@
 .layout-item-container {
   @extend .grid;
   @extend article;
-  padding: var(--spacing);
-  margin: var(--spacing) 0;
+  padding: var(--pico-spacing);
+  margin: var(--pico-spacing) 0;
   
   input, select, label, button {
     margin-bottom: 0;
@@ -55,7 +55,7 @@
 }
 
 .layout-item-offset-top {
-  margin-top: calc(var(--spacing) * 0.25 + 31px);
+  margin-top: calc(var(--pico-spacing) * 0.25 + 31px);
 }
 
 label {
@@ -68,9 +68,9 @@ label {
     i {
       display: inline-flex;
       margin-left: 8px;
-      margin-bottom: -2px;
+      // margin-bottom: -2px;
       --ggs: .8;
-      color: var(--primary);
+      color: var(--pico-primary);
     }
   }
 }
@@ -80,7 +80,7 @@ label {
   box-sizing: border-box;
   position: relative;
   display: block;
-  transform: scale(var(--ggs,1));
+  transform: scale(var(--pico-ggs,1));
   width: 20px;
   height: 20px;
   border: 2px solid;
@@ -110,18 +110,14 @@ label {
 .errors-container {
   position: sticky;
   z-index: 99;
-  top: var(--spacing);
-  border: var(--border-width) solid var(--form-element-invalid-border-color);
-}
-
-details[role=list] summary + ul {
-  z-index: 100;
+  top: var(--pico-spacing);
+  border: var(--pico-border-width) solid var(--pico-form-element-invalid-border-color);
 }
 
 /** Nav **/
 
 .github-icon {
-  margin-right: var(--nav-element-spacing-horizontal);
+  margin-right: var(--pico-nav-element-spacing-horizontal);
 }
 
 .flex-no-shrink {
@@ -132,7 +128,7 @@ details[role=list] summary + ul {
 
 $tabBorder: 4px;
 $tabBorderGap: 4px;
-$tabMarginBottom: var(--typography-spacing-vertical);
+$tabMarginBottom: var(--pico-typography-spacing-vertical);
 
 .tabs {
   display: flex;
@@ -143,17 +139,17 @@ $tabMarginBottom: var(--typography-spacing-vertical);
   min-width: 120px;
   text-align: center;
   cursor: pointer;
-  transition: var(--transition);
-  padding-left: var(--nav-element-spacing-horizontal);
-  padding-right: var(--nav-element-spacing-horizontal);
-  padding-top: var(--nav-element-spacing-vertical) ;
+  transition: var(--pico-transition);
+  padding-left: var(--pico-nav-element-spacing-horizontal);
+  padding-right: var(--pico-nav-element-spacing-horizontal);
+  padding-top: var(--pico-nav-element-spacing-vertical) ;
   padding-bottom: $tabBorderGap;
   margin-bottom: $tabMarginBottom;
 }
 
 .tab.active {
-  color: var(--primary);
-  border-bottom: $tabBorder solid var(--primary);
+  color: var(--pico-primary);
+  border-bottom: $tabBorder solid var(--pico-primary);
   font-weight: bold;
   margin-bottom: calc($tabMarginBottom - $tabBorder);
 }
@@ -161,27 +157,36 @@ $tabMarginBottom: var(--typography-spacing-vertical);
 /** Modal **/
 article {
   header {
-    margin-bottom: var(--spacing);
+    margin-bottom: var(--pico-spacing);
   }
 }
 
-/** Fix dropdown button seo issue **/
-details[role=list] summary+ul li a, li[role=list]>ul {
+details.dropdown summary+ul {
+  /** Avoid dropdown blocked by other components **/
+  z-index: 100;
+  
   li {
+    /** Fix dropdown button seo issue **/
     .button-dropdown-a {
       display: block;
-      margin: calc(var(--form-element-spacing-vertical) * -0.5)
-        calc(var(--form-element-spacing-horizontal) * -1);
-      padding: calc(var(--form-element-spacing-vertical) * 0.5)
-        var(--form-element-spacing-horizontal);
+      margin: calc(var(--pico-form-element-spacing-vertical) * -0.5)
+        calc(var(--pico-form-element-spacing-horizontal) * -1);
+      padding: calc(var(--pico-form-element-spacing-vertical) * 0.5)
+        var(--pico-form-element-spacing-horizontal);
       overflow: hidden;
-      color: var(--dropdown-color);
+      border-radius: 0;
+      color: var(--pico-dropdown-color);
       text-decoration: none;
       text-overflow: ellipsis;
-    
-      &:hover {
-        background-color: var(--dropdown-hover-background-color);
+
+      &:hover,
+      &:focus,
+      &:active,
+      &:focus-visible,
+      &[aria-current]:not([aria-current="false"]) {
+        background-color: var(--pico-dropdown-hover-background-color);
       }
     }
   }
 }
+

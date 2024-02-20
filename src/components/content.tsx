@@ -81,9 +81,9 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
         Hover <i className='gg-info' /> next to the fields to see the description about each individual fields.
       </p>
       <div className='grid'>
-        <details role='list'>
-          <summary aria-haspopup='listbox' role='button'>Try Presets</summary>
-          <ul role='listbox'>
+        <details className='dropdown'>
+          <summary role='button'>Try Presets</summary>
+          <ul>
             {presets.map(preset => (
               <li key={preset.id} role='option'>
                 <Link href={`/preset/${preset.id}`} onClick={closeClosestDetails}>{preset.name}</Link>
@@ -91,14 +91,14 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
             ))}
           </ul>
         </details>
-        <details role='list'>
-          <summary aria-haspopup='listbox' role='button'>Download</summary>
-          <ul role='listbox'>
+        <details className='dropdown'>
+          <summary role='button'>Download</summary>
+          <ul>
             <li role='option'>
-              <a onClick={onDownloadDxf} aria-busy={!tree}>CAD Files (.DXF)</a>
+              <div role='link' tabIndex={0} className='button-dropdown-a' onClick={onDownloadDxf} aria-busy={!tree}>CAD Files (.DXF)</div>
             </li>
             <li role='option'>
-              <a onClick={onDownloadConfig}>Config (.json)</a>
+              <div role='link' tabIndex={0} className='button-dropdown-a' onClick={onDownloadConfig}>Config (.json)</div>
             </li>
           </ul>
         </details>

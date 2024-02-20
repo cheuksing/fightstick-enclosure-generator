@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@picocss/pico':
-    specifier: ^1.5.11
-    version: 1.5.12
+    specifier: ^2.0.3
+    version: 2.0.3
   makerjs:
     specifier: ^0.17.0
     version: 0.17.6
@@ -682,8 +682,9 @@ packages:
       fastq: 1.16.0
     dev: true
 
-  /@picocss/pico@1.5.12:
-    resolution: {integrity: sha512-Q4s+DGqLw/0hdhGSL1T2u8mIJRkQingYqEjJvC+1st4FavBBekmjsTNykI7J7Xr1v5ZNMl/fIHULiXZt4GZvwg==}
+  /@picocss/pico@2.0.3:
+    resolution: {integrity: sha512-uIWvDcZnbA+oo4mpz8LeA05huCWbDnUz8Ad2NZXTFn6SrEXBtIdKDu+/bOD4oI8hJHp6dUEEvDLim2+qqSgruQ==}
+    engines: {node: '>=18.19.0'}
     dev: false
 
   /@pkgr/core@0.1.1:
