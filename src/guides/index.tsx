@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import {Modal} from '../components/modal';
 import {Redirect, type RouteComponentProps} from 'wouter';
 
-import {ReactComponent as Guide} from './guide.md';
+const Guide = lazy(async () => import('./guide.md').then(module => ({default: module.ReactComponent}))); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
 
-const guidesContent: Record<string, React.ComponentProps<typeof Modal>> = {
+const guidesContent: Record<string, {title: string; content: React.VFC}> = {
   guide: {
     title: 'Guide',
-    content: <Guide />,
+    content: Guide,
   },
 };
 
@@ -23,6 +23,6 @@ export const Guides: React.FC<RouteComponentProps<{id: string}>> = ({params}) =>
   }
 
   return (
-    <Modal title={data.title} content={data.content} />
+    <Modal title={data.title} content={React.createElement(data.content)} />
   );
 };

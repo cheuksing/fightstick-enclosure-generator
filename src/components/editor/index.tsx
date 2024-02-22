@@ -1,10 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {Suspense, useEffect, useRef, useState} from 'react';
 import {type Config} from '@schema';
 import {type z} from 'zod';
 import {Errors} from '../errors';
-import {EditorForm} from './form';
 import {Tabs} from '../tabs';
-import {EditorJson} from './json';
+
+const EditorForm = React.lazy(async () => import('./form').then(module => ({default: module.EditorForm})));
+const EditorJson = React.lazy(async () => import('./json').then(module => ({default: module.EditorJson})));
 
 type EditorProps = {
   presetConfig: Config;
@@ -48,8 +49,10 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
     <div>
       <Errors errors={errors} />
       <Tabs tabs={editorTabs} currentTab={currentTab} onTabChange={setCurrentTab} />
-      {currentTab === 'form' && <EditorForm config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
-      {currentTab === 'raw' && <EditorJson config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
+      <Suspense fallback={null}>
+        {currentTab === 'form' && <EditorForm config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
+        {currentTab === 'raw' && <EditorJson config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
+      </Suspense>
     </div>
   );
 };

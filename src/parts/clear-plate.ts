@@ -3,7 +3,7 @@ import {filletG2Continunity} from '@helpers/fillet';
 import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
 import {layout, walkLayout} from '@helpers/layout';
-import {buttonSpec} from './sanwa';
+import {buttonSpec} from '@parts/sanwa';
 
 export function clearPlate() {
   const config = getConfig();

@@ -1,7 +1,8 @@
 import {presets} from '@presets';
 import {type Config} from '@schema';
 import {useCallback, type ChangeEvent} from 'react';
-import {type ModelTree, cadModelTree} from '@tree';
+import {cadModelTree} from '@tree/cad';
+import {type ModelTree} from '@tree/model';
 import {Link} from 'wouter';
 import {exporter} from 'makerjs';
 

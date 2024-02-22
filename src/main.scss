@@ -7,6 +7,11 @@
   margin-top: var(--pico-spacing);
   margin-bottom: var(--pico-spacing);
 
+  & > * {
+    height: 437px;
+    background-color: #3177C6;
+  }
+
   header {
     display: none;
   }

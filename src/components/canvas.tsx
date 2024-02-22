@@ -1,6 +1,7 @@
-import Blueprint from 'react-blueprint-svg';
-import {previewModelTree, cadModelTree, type ModelTree} from '@tree';
-import React, {useMemo} from 'react';
+import {cadModelTree} from '@tree/cad';
+import {previewModelTree} from '@tree/preview';
+import {type ModelTree} from '@tree/model';
+import React, {Suspense, useMemo} from 'react';
 import {type Config} from '@schema';
 
 type CanvasProps = {
@@ -10,6 +11,8 @@ type CanvasProps = {
 };
 
 const canvasConfig = {fitOnScreen: true};
+
+const Blueprint = React.lazy(async () => import('react-blueprint-svg'));
 
 const MemoBlueprint = React.memo(Blueprint, (previousProps, nextProps) => previousProps.model === nextProps.model);
 
@@ -28,7 +31,9 @@ export const Canvas: React.FC<CanvasProps> = ({mode, tree, config}) => {
 
   return (
     <div className='canvas-container'>
-      <MemoBlueprint model={model} options={canvasConfig} />
+      <Suspense fallback={<div />}>
+        <MemoBlueprint model={model} options={canvasConfig} />
+      </Suspense>
     </div>
   );
 };
