@@ -2,12 +2,14 @@ import {model, models, chain, type IModel} from 'makerjs';
 import {filletG2Continunity} from '@helpers/fillet';
 import {getConfig} from '@config';
 
-type FilletedResult = {
-  straightLines: IModel;
-  filletArc: IModel;
+type FilletedModel = {
+  models: {
+    straightLines: IModel;
+    filletArc: IModel;
+  };
 };
 
-const cache = new Map<string, FilletedResult>();
+const cache = new Map<string, FilletedModel>();
 
 function getFilletResultWithCache(width: number, height: number, borderRadius: number) {
   const key = `${width}-${height}-${borderRadius}`;
@@ -21,7 +23,7 @@ function getFilletResultWithCache(width: number, height: number, borderRadius: n
   const c = model.findSingleChain(dimension);
   const filletArc = filletG2Continunity(c, borderRadius, 0.5);
 
-  const result = {straightLines: chain.toNewModel(c), filletArc};
+  const result = {models: {straightLines: chain.toNewModel(c), filletArc}};
 
   cache.set(key, result);
 
@@ -30,5 +32,7 @@ function getFilletResultWithCache(width: number, height: number, borderRadius: n
 
 export function common() {
   const config = getConfig();
-  return getFilletResultWithCache(config.width, config.height, config.borderRadius);
+  const result = getFilletResultWithCache(config.width, config.height, config.borderRadius);
+
+  return model.clone(result);
 }
