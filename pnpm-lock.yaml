@@ -48,6 +48,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^16.4.0
     version: 16.9.24
+  dxf-parser:
+    specifier: ^1.1.2
+    version: 1.1.2
   sass:
     specifier: ^1.70.0
     version: 1.70.0
@@ -1609,6 +1612,12 @@ packages:
       domhandler: 4.3.1
     dev: true
 
+  /dxf-parser@1.1.2:
+    resolution: {integrity: sha512-GPTumUvRkounlIazLIyJMmTWt+nlg+ksS0Hdm8jWvejmZKBTz6gvHTam76wRm4PQMma5sgKLThblQyeIJcH79Q==}
+    dependencies:
+      loglevel: 1.9.1
+    dev: true
+
   /electron-to-chromium@1.4.639:
     resolution: {integrity: sha512-CkKf3ZUVZchr+zDpAlNLEEy2NJJ9T64ULWaDgy3THXXlPVPkLu3VOs9Bac44nebVtdwl2geSj6AxTtGDOxoXhg==}
     dev: true
@@ -3035,6 +3044,11 @@ packages:
     dependencies:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
+    dev: true
+
+  /loglevel@1.9.1:
+    resolution: {integrity: sha512-hP3I3kCrDIMuRwAwHltphhDM1r8i55H33GgqjXbrisuJhF4kRhW1dNuxsRklp4bXl8DSdLaNLuiL4A/LWRfxvg==}
+    engines: {node: '>= 0.6.0'}
     dev: true
 
   /loose-envify@1.4.0:
