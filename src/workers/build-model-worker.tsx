@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {type ModelTree} from '@tree/model';
 import {type Config} from '@schema';
-import {useDebounce} from 'use-debounce';
 
 import BuildModelTreeWorker from './build-model.worker?worker';
 import {type ComputedConfig, setComputedConfig} from '@config';

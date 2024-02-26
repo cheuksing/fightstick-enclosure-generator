@@ -103,7 +103,6 @@ export function Content({config, tree, viewMode, onViewModeChange}: ContentProps
             </li>
           </ul>
         </details>
-        <div />
         <label >
           <span >Preview CAD Files</span>
           <input

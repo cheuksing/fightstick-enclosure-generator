@@ -1,4 +1,10 @@
+@use "sass:map";
+
 @import "@picocss/pico/scss/pico";
+
+#app {
+  overflow-x: hidden;
+}
 
 /** React blueprint svg **/
 
@@ -8,7 +14,7 @@
   margin-bottom: var(--pico-spacing);
 
   & > * {
-    height: 437px;
+    height: 414px;
     background-color: #3177C6;
   }
 
@@ -23,14 +29,27 @@
 
 /** Content **/
 .content-container {
-  label {
-    margin-left: auto;
-
-    input {
-      margin-left: 0.375em;
-      margin-inline-start: 0.375em;
-      margin-right: 0;
-      margin-inline-end: 0;
+  & >.grid { 
+    label {
+      margin-left: auto;
+      margin-top: auto;
+      margin-bottom: 17px;
+      white-space: nowrap;
+  
+      @if map.get($breakpoints, "md") {
+        @media (min-width: map.get(map.get($breakpoints, "md"), "breakpoint")) {
+          margin-top: 0;
+          grid-column-start: span 2;
+        }
+      }
+  
+  
+      input {
+        margin-left: 0.375em;
+        margin-inline-start: 0.375em;
+        margin-right: 0;
+        margin-inline-end: 0;
+      }
     }
   }
 
@@ -194,4 +213,3 @@ details.dropdown summary+ul {
     }
   }
 }
-

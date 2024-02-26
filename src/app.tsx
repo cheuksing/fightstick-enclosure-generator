@@ -48,7 +48,7 @@ export function App() {
   }, [presetId]);
 
   return (
-    <div>
+    <>
       <Nav />
       <Canvas mode={debouncedViewMode} tree={tree} config={debouncedConfig} />
       <div className='container'>
@@ -61,7 +61,7 @@ export function App() {
       <Suspense fallback={null}>
         <Route path='/guides/:id' component={Guides} />
       </Suspense>
-    </div>
+    </>
   );
 }
 
