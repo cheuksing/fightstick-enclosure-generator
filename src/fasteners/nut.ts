@@ -67,12 +67,25 @@ function tJoint({size, isCenter}: {size: ScrewSize; isCenter: boolean}) {
     },
   };
 
-  const holes = {
-    ...new models.Rectangle(largeNumber, s.holeRadius),
-    origin: [-largeNumber + safeNumber, -s.holeRadius / 2],
-  };
+  if (isCenter) {
+    const holes = {
+      ...new models.Rectangle(largeNumber, s.holeRadius),
+      origin: [-largeNumber + safeNumber, -s.holeRadius / 2],
+    };
 
-  return isCenter ? model.combineUnion(nut, holes) : nut;
+    model.combineUnion(nut, holes);
+
+    const joint = {
+      models: {
+        nut,
+        holes,
+      },
+    };
+
+    return joint;
+  }
+
+  return nut;
 }
 
 export function nutHolesHorizontal({

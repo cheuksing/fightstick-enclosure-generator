@@ -76,10 +76,10 @@ function frontLeftCorner(layerIdx: number) {
 
   model.moveRelative(rect, [0, height - h]);
 
-  const border = model.combineSubtraction(
-    model.combineIntersection(rect, common()),
-    sidePlatesVertical(),
-  );
+  let border: IModel = rect;
+  border = frontLeftHorizontalScrews(layerIdx, border);
+  border = model.combineSubtraction(border, sidePlatesVertical());
+  border = model.combineIntersection(border, common());
 
   const {m4, nut} = frontLeftVerticalScrews(layerIdx);
 
@@ -94,8 +94,6 @@ function frontLeftCorner(layerIdx: number) {
       },
     },
   };
-
-  m.models.border.models.border = frontLeftHorizontalScrews(layerIdx, m.models.border.models.border);
 
   return m;
 }
@@ -166,10 +164,10 @@ function backLeftCorner(layerIdx: number) {
 
   const rect = new models.Rectangle(w, h);
 
-  const border = model.combineSubtraction(
-    model.combineIntersection(rect, common()),
-    sidePlatesVertical(),
-  );
+  let border: IModel = rect;
+  border = backLeftHorizontalScrews(layerIdx, border);
+  border = model.combineSubtraction(border, sidePlatesVertical());
+  border = model.combineIntersection(border, common());
 
   const {m4, nut} = backLeftVerticalScrews(layerIdx);
 
@@ -185,8 +183,6 @@ function backLeftCorner(layerIdx: number) {
     },
   };
 
-  m.models.border.models.border = backLeftHorizontalScrews(layerIdx, m.models.border.models.border);
-
   return m;
 }
 
@@ -194,12 +190,12 @@ function leftStandoff(layerIdx: number) {
   const {height} = getConfig();
   const width = Math.max(frontLeftBox()[0], backLeftBox()[0]);
 
-  const rect = new models.Rectangle(width, height);
+  let border: IModel = new models.Rectangle(width, height);
 
-  const border = model.combineSubtraction(
-    model.combineIntersection(rect, common()),
-    sidePlatesVertical(),
-  );
+  border = frontLeftHorizontalScrews(layerIdx, border);
+  border = backLeftHorizontalScrews(layerIdx, border);
+  border = model.combineSubtraction(border, sidePlatesVertical());
+  border = model.combineIntersection(border, common());
 
   const flvs = frontLeftVerticalScrews(layerIdx);
   const blvs = backLeftVerticalScrews(layerIdx);
@@ -225,9 +221,6 @@ function leftStandoff(layerIdx: number) {
       },
     },
   };
-
-  m.models.border.models.border = frontLeftHorizontalScrews(layerIdx, m.models.border.models.border);
-  m.models.border.models.border = backLeftHorizontalScrews(layerIdx, m.models.border.models.border);
 
   return m;
 }

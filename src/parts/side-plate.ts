@@ -21,19 +21,21 @@ export function sidePlatesVertical() {
   const {width, height} = getConfig();
   const {x, y, thickness} = getSidePlateDimensions();
 
-  const rectH = new models.Rectangle(thickness, y);
-  const rectW = new models.Rectangle(x, thickness);
+  const smallNumber = 0.05;
+
+  const rectH = new models.Rectangle(thickness + smallNumber, y);
+  const rectW = new models.Rectangle(x, thickness + smallNumber);
 
   const front = model.clone(rectW);
   model.moveRelative(front, [-x / 2, 0]);
   model.moveRelative(front, [width / 2, height - thickness]);
   const back = model.clone(rectW);
   model.moveRelative(back, [-x / 2, 0]);
-  model.moveRelative(back, [width / 2, 0]);
+  model.moveRelative(back, [width / 2, -smallNumber]);
 
   const left = model.clone(rectH);
   model.moveRelative(left, [0, -y / 2]);
-  model.moveRelative(left, [0, height / 2]);
+  model.moveRelative(left, [-smallNumber, height / 2]);
   const right = model.clone(rectH);
   model.moveRelative(right, [0, -y / 2]);
   model.moveRelative(right, [width - thickness, height / 2]);
