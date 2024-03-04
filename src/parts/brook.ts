@@ -1,4 +1,4 @@
-import {LayerColor} from '@helpers/color';
+import {LayerName} from '@helpers/color';
 import {type IPoint, point, model, paths, path, type IModel} from 'makerjs';
 import {screwHoles} from '@fasteners/screw';
 
@@ -22,7 +22,7 @@ const brookHoles = [
 function brook({point}: BrookDrawOptions) {
   const m4 = screwHoles({points: brookHoles, size: 'm4'});
   model.move(m4, point);
-  m4.layer = LayerColor.orange;
+  m4.layer = LayerName.m4Countersunk;
   return m4;
 }
 

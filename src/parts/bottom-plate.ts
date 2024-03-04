@@ -1,6 +1,7 @@
 import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
 import {common} from './common';
+import {LayerName} from '@helpers/color';
 
 export function bottomPlate() {
   const config = getConfig();
@@ -20,8 +21,14 @@ export function bottomPlate() {
 
   const m = {
     models: {
-      border: common(),
-      m4: screwHoles({points: screws, size: 'm4'}),
+      border: {
+        ...common(),
+        layer: LayerName.bottomPlateBorder,
+      },
+      m4: {
+        ...screwHoles({points: screws, size: 'm4'}),
+        layer: LayerName.m4Countersunk,
+      },
     },
   };
 

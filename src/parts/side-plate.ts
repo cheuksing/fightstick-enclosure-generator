@@ -4,6 +4,7 @@ import {screwHoles} from '@fasteners/screw';
 import {mirrorX, mirrorY} from '@helpers/mirror';
 import {buttonSpec, buttons} from './sanwa';
 import {neutrik} from './neutrik';
+import {LayerName} from '@helpers/color';
 
 function getSidePlateDimensions() {
   const config = getConfig();
@@ -78,6 +79,7 @@ export function sidePlateLeft() {
       holes: {
         ...screwHoles({points: holes, size: 'm4'}),
         origin: [0, -toAbsolutePosition],
+        layer: LayerName.m4,
       },
     },
   };
@@ -115,6 +117,7 @@ export function sidePlateBack() {
       holes: {
         ...screwHoles({points: holes, size: 'm4'}),
         origin: [-toAbsolutePosition, 0],
+        layer: LayerName.m4,
       },
       buttons: {},
       neutrik: {},

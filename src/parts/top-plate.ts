@@ -2,6 +2,7 @@ import {getConfig} from '@config';
 import {screwHoles} from '@fasteners/screw';
 import {common} from './common';
 import {layout} from '@helpers/layout';
+import {LayerName} from '@helpers/color';
 
 export function topPlate() {
   const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest, clearPlateScrewPositions} = getConfig();
@@ -19,9 +20,18 @@ export function topPlate() {
 
   const m = {
     models: {
-      border,
-      m4c: screwHoles({points: screws, size: 'm4'}),
-      m4: screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}),
+      border: {
+        ...border,
+        layer: LayerName.topPlateBorder,
+      },
+      m4c: {
+        ...screwHoles({points: screws, size: 'm4'}),
+        layer: LayerName.m4Countersunk,
+      },
+      m4: {
+        ...screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}),
+        layer: LayerName.m4,
+      },
       cutout: layout({relativeOrigin: [width / 2, dy], isClearPlate: false}),
     },
   };

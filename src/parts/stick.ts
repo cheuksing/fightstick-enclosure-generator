@@ -1,6 +1,6 @@
 import {type IPoint, model, paths, type IModel} from 'makerjs';
 import {screwHoles} from '@fasteners/screw';
-import {LayerColor} from '@helpers/color';
+import {LayerName} from '@helpers/color';
 
 type StickDrawOptions = {
   point: IPoint;
@@ -33,7 +33,7 @@ export function stick({point, isClearPlate}: StickDrawOptions) {
     model.addModel(m, {
       ...screwHoles({points: mountingHoles, size: 'm4'}),
       origin: [-w / 2, -h / 2],
-      layer: LayerColor.red,
+      layer: LayerName.m4Countersunk,
     }, 'm4');
   }
 

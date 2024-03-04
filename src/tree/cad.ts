@@ -1,7 +1,7 @@
 import {type IModel, measure, model} from 'makerjs';
 import {type Config} from '@schema';
 import {brookStandoff} from '@parts/brook';
-import {LayerColor} from '@helpers/color';
+import {dxfLayerOptions, svgLayerOptions} from '@helpers/color';
 import {type ModelTree} from './model';
 
 export function cadModelTree(tree: ModelTree, config: Config) {
@@ -63,54 +63,22 @@ export function cadModelTree(tree: ModelTree, config: Config) {
   const leftSidePlate = model.clone(tree.models.sidePlates.models.left);
   const rightSidePlate = model.clone(tree.models.sidePlates.models.right);
 
-  if (leftSidePlate.models?.holes) {
-    leftSidePlate.models.holes.layer = LayerColor.red;
-  }
-
-  if (rightSidePlate.models?.holes) {
-    rightSidePlate.models.holes.layer = LayerColor.red;
-  }
-
   line = [leftSidePlate, rightSidePlate];
   printLine('sidePlatesX');
 
   const backSidePlate = model.clone(tree.models.sidePlates.models.back);
 
-  if (backSidePlate.models?.holes) {
-    backSidePlate.models.holes.layer = LayerColor.red;
-  }
-
   const frontSidePlate = model.clone(tree.models.sidePlates.models.front);
-
-  if (frontSidePlate.models?.holes) {
-    frontSidePlate.models.holes.layer = LayerColor.red;
-  }
 
   line = [backSidePlate, frontSidePlate];
   printLine('sidePlatesY');
 
   const bottomPlate = model.clone(tree.models.bottomPlate);
 
-  if (bottomPlate.models?.m4) {
-    bottomPlate.models.m4.layer = LayerColor.red;
-  }
-
-  if (bottomPlate.models?.border) {
-    bottomPlate.models.border.layer = LayerColor.fuchsia;
-  }
-
   line = [bottomPlate];
   printLine('bottomPlate');
 
   const topPlate = model.clone(tree.models.topPlate);
-
-  if (topPlate.models?.m4c) {
-    topPlate.models.m4c.layer = LayerColor.red;
-  }
-
-  if (topPlate.models?.border) {
-    topPlate.models.border.layer = LayerColor.fuchsia;
-  }
 
   line = [topPlate];
   printLine('topPlate');
@@ -124,6 +92,15 @@ export function cadModelTree(tree: ModelTree, config: Config) {
     line = [brookStandoffPlate];
     printLine('brookStandoffPlate');
   }
+
+  m.exporterOptions = {
+    toDXF: { // eslint-disable-line @typescript-eslint/naming-convention
+      layerOptions: dxfLayerOptions,
+    },
+    toSVG: { // eslint-disable-line @typescript-eslint/naming-convention
+      layerOptions: svgLayerOptions,
+    },
+  };
 
   console.log('cadModelTree', m);
 
