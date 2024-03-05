@@ -17,6 +17,8 @@ const defaultConfig: Config = {
   layout: hitbox,
   layoutOffsetX: 0,
   layoutOffsetY: 0,
+  leftOptionButtonsNumber: 2,
+  rightOptionButtonsNumber: 2,
 };
 
 export function createPreset(id: string, name: string, config: Partial<Config>) {

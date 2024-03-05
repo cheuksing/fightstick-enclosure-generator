@@ -23,6 +23,8 @@ export const schema = z.object({
   layout: z.array(layoutItemSchema),
   layoutOffsetX: z.coerce.number().describe('Offset of the layout items by X'),
   layoutOffsetY: z.coerce.number().describe('Offset of the layout items by Y'),
+  leftOptionButtonsNumber: z.coerce.number().min(0).max(4).describe('Number of options buttons on the left side of front plate'),
+  rightOptionButtonsNumber: z.coerce.number().min(0).max(4).describe('Number of options buttons on the right side of front plate'),
 });
 
 export const refinedSchema = schema

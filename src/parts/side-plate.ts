@@ -127,7 +127,7 @@ export function sidePlateBack() {
 }
 
 export function sidePlates() {
-  const {cornerScrewPositions, conrerScrewMagicNumber} = getConfig();
+  const {cornerScrewPositions, conrerScrewMagicNumber, leftOptionButtonsNumber, rightOptionButtonsNumber} = getConfig();
 
   const left = sidePlateLeft();
   const right = mirrorY(left);
@@ -141,15 +141,18 @@ export function sidePlates() {
   const cornerX = closestScrewX - front.origin[0] + conrerScrewMagicNumber;
   const startX = cornerX + buttonSpec.obsf24.outerRadius + safeNumber;
 
+  const buttonPts = [];
+
+  for (let i = 0; i < leftOptionButtonsNumber; i++) {
+    buttonPts.push([startX + (i * 30), -y]);
+  }
+
+  for (let i = 0; i < rightOptionButtonsNumber; i++) {
+    buttonPts.push([ext.width - startX - (i * 30), -y]);
+  }
+
   front.models.buttons = buttons({
-    points: [
-      // Left
-      [startX, -y],
-      [startX + 30, -y],
-      // Right
-      [ext.width - startX, -y],
-      [ext.width - startX - 30, -y],
-    ],
+    points: buttonPts,
     size: 'obsf24',
     // No slot for the front side plate
     isClearPlate: true,
