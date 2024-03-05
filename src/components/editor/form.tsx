@@ -28,11 +28,13 @@ const baseFields = [
   'frontPlateThickness',
   'backPlateThickness',
   'leftRightPlateThickness',
+  'clearPlateThickness',
   'clearPlateScrewOffset',
   'minDepth',
-  'clearPlateThickness',
   'layoutOffsetX',
   'layoutOffsetY',
+  'leftOptionButtonsNumber',
+  'rightOptionButtonsNumber',
 ] as const;
 
 type EditorFormProps = {
