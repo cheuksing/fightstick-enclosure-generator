@@ -6,9 +6,9 @@ type DrawOptions = {
 };
 
 export function neutrik({point}: DrawOptions) {
-  const {requriedCornerLayers, plateThickness} = getConfig();
+  const {requriedCornerLayers, cornersPlateThickness} = getConfig();
 
-  const sidePlateHeight = requriedCornerLayers * plateThickness;
+  const sidePlateHeight = requriedCornerLayers * cornersPlateThickness;
 
   // Const w = 26 + 0.1;
   const h = 31 + 0.1;

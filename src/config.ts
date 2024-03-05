@@ -106,7 +106,7 @@ export function getCornerScrewPositions(config: Config, option: {
 }
 
 export function computeConfig(config: Config) {
-  const {width, height, borders, palmRest, clearPlateThickness, plateThickness, minDepth} = config;
+  const {width, height, borders, palmRest, clearPlateThickness, cornersPlateThickness, minDepth} = config;
 
   const centerX = width / 2;
   const centerY = height / 2;
@@ -143,7 +143,7 @@ export function computeConfig(config: Config) {
   // 2mm is added for a bit of clearance.
   const d = Math.max(minDepth, 26 + 0.1 + 2, buttonSpec.obsf24.outerRadius + 2);
 
-  let requriedCornerLayers = Math.ceil((d - clearPlateThickness) / plateThickness) - 1;
+  let requriedCornerLayers = Math.ceil((d - clearPlateThickness) / cornersPlateThickness) - 1;
   if (requriedCornerLayers % 2 === 0) {
     requriedCornerLayers += 1;
   }

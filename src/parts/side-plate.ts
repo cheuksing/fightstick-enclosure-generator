@@ -6,40 +6,36 @@ import {buttonSpec, buttons} from './sanwa';
 import {neutrik} from './neutrik';
 import {LayerName} from '@helpers/color';
 
+const safeNumber = 5;
+
 function getSidePlateDimensions() {
   const config = getConfig();
 
-  const safeNumber = 5;
-
-  const {width, height, borderRadius, plateThickness} = config;
+  const {width, height, borderRadius} = config;
   const x = width - (borderRadius * 2) - safeNumber;
   const y = height - (borderRadius * 2) - safeNumber;
-  const thickness = plateThickness;
-  return {x, y, thickness};
+  return {x, y};
 }
 
 export function sidePlatesVertical() {
-  const {width, height} = getConfig();
-  const {x, y, thickness} = getSidePlateDimensions();
+  const {width, height, frontPlateThickness, backPlateThickness, leftRightPlateThickness} = getConfig();
+  const {x, y} = getSidePlateDimensions();
 
   const smallNumber = 0.05;
 
-  const rectH = new models.Rectangle(thickness + smallNumber, y);
-  const rectW = new models.Rectangle(x, thickness + smallNumber);
-
-  const front = model.clone(rectW);
+  const front = new models.Rectangle(x, frontPlateThickness + smallNumber);
   model.moveRelative(front, [-x / 2, 0]);
-  model.moveRelative(front, [width / 2, height - thickness]);
-  const back = model.clone(rectW);
+  model.moveRelative(front, [width / 2, height - frontPlateThickness]);
+  const back = new models.Rectangle(x, backPlateThickness + smallNumber);
   model.moveRelative(back, [-x / 2, 0]);
   model.moveRelative(back, [width / 2, -smallNumber]);
 
-  const left = model.clone(rectH);
+  const left = new models.Rectangle(leftRightPlateThickness + smallNumber, y);
   model.moveRelative(left, [0, -y / 2]);
   model.moveRelative(left, [-smallNumber, height / 2]);
-  const right = model.clone(rectH);
+  const right = new models.Rectangle(leftRightPlateThickness + smallNumber, y);
   model.moveRelative(right, [0, -y / 2]);
-  model.moveRelative(right, [width - thickness, height / 2]);
+  model.moveRelative(right, [width - leftRightPlateThickness, height / 2]);
 
   return {
     models: {
@@ -53,7 +49,7 @@ export function sidePlatesVertical() {
 
 export function sidePlateLeft() {
   const {y} = getSidePlateDimensions();
-  const {height, sidePlateScrewLayers, requriedCornerLayers, plateThickness, sidePlateScrewPositions} = getConfig();
+  const {height, sidePlateScrewLayers, requriedCornerLayers, cornersPlateThickness, sidePlateScrewPositions} = getConfig();
 
   const y1 = sidePlateScrewPositions.left.front[1];
   const y2 = sidePlateScrewPositions.left.back[1];
@@ -62,7 +58,7 @@ export function sidePlateLeft() {
 
   for (let i = 0; i < requriedCornerLayers; i++) {
     if (sidePlateScrewLayers.includes(i)) {
-      const x = (i * plateThickness) + (plateThickness / 2);
+      const x = (i * cornersPlateThickness) + (cornersPlateThickness / 2);
       holes.push([x, y1], [x, y2]);
     }
   }
@@ -73,7 +69,7 @@ export function sidePlateLeft() {
     models: {
       rect: {
         // Add 0.5 for clearance
-        ...new models.Rectangle((requriedCornerLayers * plateThickness) - 0.5, y - 0.5),
+        ...new models.Rectangle((requriedCornerLayers * cornersPlateThickness) - 0.5, y - 0.5),
         origin: [0.25, 0.25],
       },
       holes: {
@@ -84,14 +80,14 @@ export function sidePlateLeft() {
     },
   };
 
-  model.moveRelative(m, [-10 - (requriedCornerLayers * plateThickness), toAbsolutePosition]);
+  model.moveRelative(m, [-10 - (requriedCornerLayers * cornersPlateThickness), toAbsolutePosition]);
 
   return m;
 }
 
 export function sidePlateBack() {
   const {x} = getSidePlateDimensions();
-  const {width, sidePlateScrewLayers, requriedCornerLayers, plateThickness, sidePlateScrewPositions} = getConfig();
+  const {width, sidePlateScrewLayers, requriedCornerLayers, cornersPlateThickness, sidePlateScrewPositions} = getConfig();
 
   const x1 = sidePlateScrewPositions.back.left[0];
   const x2 = sidePlateScrewPositions.back.right[0];
@@ -100,7 +96,7 @@ export function sidePlateBack() {
 
   for (let i = 0; i < requriedCornerLayers; i++) {
     if (sidePlateScrewLayers.includes(i)) {
-      const y = (i * plateThickness) + (plateThickness / 2);
+      const y = (i * cornersPlateThickness) + (cornersPlateThickness / 2);
       holes.push([x1, y], [x2, y]);
     }
   }
@@ -111,7 +107,7 @@ export function sidePlateBack() {
     models: {
       rect: {
         // Add 0.5 for clearance
-        ...new models.Rectangle(x - 0.5, (requriedCornerLayers * plateThickness) - 0.5),
+        ...new models.Rectangle(x - 0.5, (requriedCornerLayers * cornersPlateThickness) - 0.5),
         origin: [0.25, 0.25],
       },
       holes: {
@@ -125,7 +121,7 @@ export function sidePlateBack() {
     origin: [0, 0],
   };
 
-  model.moveRelative(m, [toAbsolutePosition, -10 - (requriedCornerLayers * plateThickness)]);
+  model.moveRelative(m, [toAbsolutePosition, -10 - (requriedCornerLayers * cornersPlateThickness)]);
 
   return m;
 }
@@ -143,7 +139,7 @@ export function sidePlates() {
   const y = ext.height / 2;
   const closestScrewX = cornerScrewPositions.frontLeft.top[0];
   const cornerX = closestScrewX - front.origin[0] + conrerScrewMagicNumber;
-  const startX = cornerX + buttonSpec.obsf24.outerRadius + 5;
+  const startX = cornerX + buttonSpec.obsf24.outerRadius + safeNumber;
 
   front.models.buttons = buttons({
     points: [
