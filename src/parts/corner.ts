@@ -242,18 +242,19 @@ type AllCornersModel = {
 } & IModel;
 
 export function corners(): AllCornersModel {
-  const {requriedCornerLayers, height} = getConfig();
+  const {requriedCornerLayers, height, mergeFrontBackCorners} = getConfig();
 
   const m: AllCornersModel = {
     models: {},
   };
 
   const isOverlap = frontLeftBox()[1] + backLeftBox()[1] >= height;
+  const shouldFrontBackMerge = mergeFrontBackCorners || isOverlap;
 
   for (let i = 0; i < requriedCornerLayers; i++) {
     let corners: CornersModel;
 
-    if (isOverlap) {
+    if (shouldFrontBackMerge) {
       const left = leftStandoff(i);
       const right = mirrorY(left);
 

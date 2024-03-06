@@ -19,6 +19,7 @@ const defaultConfig: Config = {
   layoutOffsetY: 0,
   leftOptionButtonsNumber: 2,
   rightOptionButtonsNumber: 2,
+  mergeFrontBackCorners: false,
 };
 
 export function createPreset(id: string, name: string, config: Partial<Config>) {

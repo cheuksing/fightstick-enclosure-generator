@@ -25,6 +25,7 @@ export const schema = z.object({
   layoutOffsetY: z.coerce.number().describe('Offset of the layout items by Y'),
   leftOptionButtonsNumber: z.coerce.number().min(0).max(4).describe('Number of options buttons on the left side of front plate'),
   rightOptionButtonsNumber: z.coerce.number().min(0).max(4).describe('Number of options buttons on the right side of front plate'),
+  mergeFrontBackCorners: z.boolean().describe('Merge front and back corners'),
 });
 
 export const refinedSchema = schema

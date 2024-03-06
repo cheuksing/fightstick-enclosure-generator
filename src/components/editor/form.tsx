@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {schema, type Config, type LayoutItem, refinedSchema} from '@schema';
 import {type z} from 'zod';
-import {NumberField} from './fields';
+import {BooleanField, NumberField} from './fields';
 import {LayoutItemField, getFormItemFromZodType} from './layout';
 import {useValidateInputValue} from './utils';
 
@@ -18,7 +18,7 @@ function getLayoutItemMapFromConfig(config: Config) {
   return map;
 }
 
-const baseFields = [
+const baseNumberFields = [
   'width',
   'height',
   'borders',
@@ -36,6 +36,8 @@ const baseFields = [
   'leftOptionButtonsNumber',
   'rightOptionButtonsNumber',
 ] as const;
+
+const baseBooleanFields = ['mergeFrontBackCorners'] as const;
 
 type EditorFormProps = {
   config: Config;
@@ -98,12 +100,18 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
     isInitialMount.current = false;
   }, []);
 
-  const BaseInputFields = baseFields.map(key => {
+  // Format the base fields into a grid
+  const ItemsInColumn = 4;
+
+  const BaseFieldsInGrid: JSX.Element[][] = [];
+
+  // Add the base number fields into the grid
+  for (const [i, key] of baseNumberFields.entries()) {
     const value = inputValue[key] as number;
     const itemShape = schema.shape[key];
     const item = getFormItemFromZodType(itemShape, key);
 
-    return (
+    const child = (
       <NumberField
         key={key}
         onChange={onBaseFieldsChange}
@@ -112,29 +120,48 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
         isError={Boolean(errors?.fieldErrors[key])}
       />
     );
-  });
 
-  // Format the base fields into a grid
-  const ItemsInColumn = 4;
-
-  const BaseFieldsInGrid: JSX.Element[][] = [];
-
-  for (let i = 0; i < baseFields.length; i++) {
-    const f = BaseInputFields[i];
     if (i % ItemsInColumn === 0) {
-      BaseFieldsInGrid.push([f]);
+      BaseFieldsInGrid.push([child]);
     } else {
       const lastRow = BaseFieldsInGrid.at(-1);
-      lastRow?.push?.(f);
+      lastRow?.push?.(child);
     }
+  }
 
-    if (i === baseFields.length - 1) {
-      const left = (i - 1) % ItemsInColumn;
+  // Add the base boolean fields into the grid
+  for (const [i, key] of baseBooleanFields.entries()) {
+    const value = inputValue[key] as boolean;
+    const itemShape = schema.shape[key];
+    const item = getFormItemFromZodType(itemShape, key);
 
-      if (left !== 0) {
-        for (let l = 0; l < left; l++) {
-          BaseFieldsInGrid.at(-1)?.push?.(<div key={`grid-placeholder-${l}`} />);
-        }
+    const child = (
+      <BooleanField
+        key={key}
+        onChange={onBaseFieldsChange}
+        value={value}
+        item={item}
+        isError={Boolean(errors?.fieldErrors[key])}
+      />
+    );
+
+    if (i % ItemsInColumn === 0) {
+      BaseFieldsInGrid.push([child]);
+    } else {
+      const lastRow = BaseFieldsInGrid.at(-1);
+      lastRow?.push?.(child);
+    }
+  }
+
+  // Fill the last row with placeholders
+  const lastRowItems = BaseFieldsInGrid.at(-1)?.length ?? 0 - 1;
+
+  if (lastRowItems > 0) {
+    const left = (lastRowItems - 1) % ItemsInColumn;
+
+    if (left !== 0) {
+      for (let l = 0; l < left; l++) {
+        BaseFieldsInGrid.at(-1)?.push?.(<div key={`grid-placeholder-${l}`} />);
       }
     }
   }

@@ -3,7 +3,7 @@ import {layoutItemSchema, type LayoutItem} from '@schema';
 import {z} from 'zod';
 import {BooleanField, EnumField, NumberField} from './fields';
 
-type ScheamZodType = z.ZodNumber | z.ZodEnum<[string, ...string[]]> | z.ZodOptional<z.ZodBoolean>;
+type ScheamZodType = z.ZodNumber | z.ZodEnum<[string, ...string[]]> | z.ZodOptional<z.ZodBoolean> | z.ZodBoolean;
 
 export function getFormItemFromZodType(shape: ScheamZodType, key: string) {
   if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodEnum) {
@@ -22,6 +22,15 @@ export function getFormItemFromZodType(shape: ScheamZodType, key: string) {
       type: 'checkbox',
       desc: shape.description,
       isOptional: true,
+    };
+  }
+
+  if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodBoolean) {
+    return {
+      key,
+      type: 'checkbox',
+      desc: shape.description,
+      isOptional: false,
     };
   }
 
