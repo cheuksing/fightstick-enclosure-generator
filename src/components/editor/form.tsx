@@ -1,22 +1,21 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {schema, type Config, type LayoutItem, refinedSchema} from '@schema';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {schema, type Config, refinedSchema} from '@schema';
 import {type z} from 'zod';
 import {BooleanField, NumberField} from './fields';
-import {LayoutItemField, getFormItemFromZodType} from './layout';
-import {useValidateInputValue} from './utils';
+import {getFormItemFromZodType, useValidateInputValue} from './utils';
 
-let layoutItemKey = 0;
+// Let layoutItemKey = 0;
 
-function getLayoutItemMapFromConfig(config: Config) {
-  const map: Record<string, LayoutItem> = {};
+// function getLayoutItemMapFromConfig(config: Config) {
+//   const map: Record<string, LayoutItem> = {};
 
-  for (const layoutItem of config.layout) {
-    const key = String(layoutItemKey++);
-    map[key] = layoutItem;
-  }
+//   for (const layoutItem of config.layout) {
+//     const key = String(layoutItemKey++);
+//     map[key] = layoutItem;
+//   }
 
-  return map;
-}
+//   return map;
+// }
 
 const baseNumberFields = [
   'width',
@@ -58,39 +57,39 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
     }));
   }, []);
 
-  const [layoutItemState, setLayoutItemState] = useState<Record<string, LayoutItem>>(getLayoutItemMapFromConfig(inputValue));
+  // Const [layoutItemState, setLayoutItemState] = useState<Record<string, LayoutItem>>(getLayoutItemMapFromConfig(inputValue));
 
-  const onLayoutChange = useCallback((k: string, v: LayoutItem) => {
-    setLayoutItemState(s => ({...s, [k]: v}));
-  }, []);
+  // const onLayoutChange = useCallback((k: string, v: LayoutItem) => {
+  //   setLayoutItemState(s => ({...s, [k]: v}));
+  // }, []);
 
-  const onLayoutItemAdd = useCallback(() => {
-    const key = String(layoutItemKey++);
-    setLayoutItemState(s => ({...s, [key]: {x: 0, y: 0, t: 'obsf24', isBelow: false}}));
-  }, []);
+  // const onLayoutItemAdd = useCallback(() => {
+  //   const key = String(layoutItemKey++);
+  //   setLayoutItemState(s => ({...s, [key]: {x: 0, y: 0, t: 'obsf24', isBelow: false}}));
+  // }, []);
 
-  const onLayoutItemRemove = useCallback((k: string) => {
-    setLayoutItemState(s => {
-      const nextState = {...s};
-      delete nextState[k]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
-      return nextState;
-    });
-  }, []);
+  // const onLayoutItemRemove = useCallback((k: string) => {
+  //   setLayoutItemState(s => {
+  //     const nextState = {...s};
+  //     delete nextState[k]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
+  //     return nextState;
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    if (isInitialMount.current) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (isInitialMount.current) {
+  //     return;
+  //   }
 
-    setInputValue(s => ({
-      ...s,
-      layout: Object.keys(layoutItemState).sort().map(k => ({
-        ...layoutItemState[k],
-        x: layoutItemState[k].x,
-        y: layoutItemState[k].y,
-      })),
-    }));
-  }, [layoutItemState]);
+  //   setInputValue(s => ({
+  //     ...s,
+  //     layout: Object.keys(layoutItemState).sort().map(k => ({
+  //       ...layoutItemState[k],
+  //       x: layoutItemState[k].x,
+  //       y: layoutItemState[k].y,
+  //     })),
+  //   }));
+  // }, [layoutItemState]);
 
   useEffect(() => {
     onErrorsChange(errors);
@@ -176,7 +175,7 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
           {row}
         </div>
       ))}
-      <h6>
+      {/* <h6>
         Edit positions of Layout Items, such as buttons / sticks / brook pcb.
       </h6>
       {Object.keys(layoutItemState).map(k => (
@@ -189,7 +188,7 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
           btnLabel='Remove'
         />
       ))}
-      <button onClick={onLayoutItemAdd}>Add Layout Item</button>
+      <button onClick={onLayoutItemAdd}>Add Layout Item</button> */}
     </>
   );
 };

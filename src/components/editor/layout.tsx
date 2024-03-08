@@ -1,148 +1,105 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {layoutItemSchema, type LayoutItem} from '@schema';
-import {z} from 'zod';
-import {BooleanField, EnumField, NumberField} from './fields';
+// Import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+// import {layoutItemSchema, type LayoutItem} from '@schema';
+// import {BooleanField, EnumField, NumberField} from './fields';
+// import {getFormItemFromZodType} from './utils';
 
-type ScheamZodType = z.ZodNumber | z.ZodEnum<[string, ...string[]]> | z.ZodOptional<z.ZodBoolean> | z.ZodBoolean;
+// const shapeX = layoutItemSchema.shape.x;
+// const shapeY = layoutItemSchema.shape.y;
+// const shapeT = layoutItemSchema.shape.t;
+// const shapeIsBelow = layoutItemSchema.shape.isBelow;
+// const itemX = getFormItemFromZodType(shapeX, 'x');
+// const itemY = getFormItemFromZodType(shapeY, 'y');
+// const itemT = getFormItemFromZodType(shapeT, 't');
+// const itemIsBelow = getFormItemFromZodType(shapeIsBelow, 'isBelow');
 
-export function getFormItemFromZodType(shape: ScheamZodType, key: string) {
-  if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodEnum) {
-    return {
-      key,
-      type: 'select',
-      desc: shape.description,
-      options: ('options' in shape ? shape.options : []) as string[],
-      isOptional: false,
-    };
-  }
+// type LayoutItemProps = {
+//   uniqueKey: string;
+//   value: LayoutItem;
+//   onChange: (key: string, v: LayoutItem) => void;
+//   onBtnClick: (key: string) => void;
+//   btnLabel: React.ReactNode;
+// };
 
-  if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodOptional) {
-    return {
-      key,
-      type: 'checkbox',
-      desc: shape.description,
-      isOptional: true,
-    };
-  }
+// const buttonsKeys = new Set(['obsf24', 'obsf30']);
 
-  if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodBoolean) {
-    return {
-      key,
-      type: 'checkbox',
-      desc: shape.description,
-      isOptional: false,
-    };
-  }
+// export const LayoutItemField: React.FC<LayoutItemProps> = ({uniqueKey, value, onChange, onBtnClick, btnLabel}) => {
+//   const [state, setState] = useState<LayoutItem>(value);
 
-  if (shape._def.typeName === z.ZodFirstPartyTypeKind.ZodNumber) {
-    return {
-      key,
-      type: 'number',
-      desc: shape.description,
-      isOptional: false,
-    };
-  }
+//   const onItemChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+//     const target = event.target as HTMLInputElement;
+//     const nextState = {
+//       ...state,
+//       [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+//     };
 
-  throw new Error('Unknown type');
-}
+//     if (!buttonsKeys.has(nextState.t)) {
+//       delete nextState.isBelow;
+//     }
 
-const shapeX = layoutItemSchema.shape.x;
-const shapeY = layoutItemSchema.shape.y;
-const shapeT = layoutItemSchema.shape.t;
-const shapeIsBelow = layoutItemSchema.shape.isBelow;
-const itemX = getFormItemFromZodType(shapeX, 'x');
-const itemY = getFormItemFromZodType(shapeY, 'y');
-const itemT = getFormItemFromZodType(shapeT, 't');
-const itemIsBelow = getFormItemFromZodType(shapeIsBelow, 'isBelow');
+//     setState(nextState);
+//   }, []);
 
-type LayoutItemProps = {
-  uniqueKey: string;
-  value: LayoutItem;
-  onChange: (key: string, v: LayoutItem) => void;
-  onBtnClick: (key: string) => void;
-  btnLabel: React.ReactNode;
-};
+//   const isInitialMount = useRef(true);
 
-const buttonsKeys = new Set(['obsf24', 'obsf30']);
+//   useEffect(() => {
+//     if (isInitialMount.current) {
+//       return;
+//     }
 
-export const LayoutItemField: React.FC<LayoutItemProps> = ({uniqueKey, value, onChange, onBtnClick, btnLabel}) => {
-  const [state, setState] = useState<LayoutItem>(value);
+//     onChange(uniqueKey, state);
+//   }, [uniqueKey, value, state, onChange]);
 
-  const onItemChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const target = event.target as HTMLInputElement;
-    const nextState = {
-      ...state,
-      [target.name]: target.type === 'checkbox' ? target.checked : target.value,
-    };
+//   const onClick = useCallback(() => {
+//     onBtnClick(uniqueKey);
+//   }, [uniqueKey, onBtnClick]);
 
-    if (!buttonsKeys.has(nextState.t)) {
-      delete nextState.isBelow;
-    }
+//   const isErrors = useMemo(() => {
+//     const result = layoutItemSchema.safeParse(state);
+//     if (result.success) {
+//       return new Set([]);
+//     }
 
-    setState(nextState);
-  }, []);
+//     const errors = Object.keys(result.error.flatten().fieldErrors ?? {});
+//     return new Set(errors);
+//   }, [state]);
 
-  const isInitialMount = useRef(true);
+//   useEffect(() => {
+//     isInitialMount.current = false;
+//   }, []);
 
-  useEffect(() => {
-    if (isInitialMount.current) {
-      return;
-    }
-
-    onChange(uniqueKey, state);
-  }, [uniqueKey, value, state, onChange]);
-
-  const onClick = useCallback(() => {
-    onBtnClick(uniqueKey);
-  }, [uniqueKey, onBtnClick]);
-
-  const isErrors = useMemo(() => {
-    const result = layoutItemSchema.safeParse(state);
-    if (result.success) {
-      return new Set([]);
-    }
-
-    const errors = Object.keys(result.error.flatten().fieldErrors ?? {});
-    return new Set(errors);
-  }, [state]);
-
-  useEffect(() => {
-    isInitialMount.current = false;
-  }, []);
-
-  return (
-    <div className='layout-item-container'>
-      <NumberField
-        item={itemX}
-        value={state.x}
-        onChange={onItemChange}
-        isError={isErrors.has('x')}
-      />
-      <NumberField
-        item={itemY}
-        value={state.y}
-        onChange={onItemChange}
-        isError={isErrors.has('y')}
-      />
-      <EnumField
-        item={itemT}
-        value={state.t}
-        onChange={onItemChange}
-        isError={isErrors.has('t')}
-      />
-      {buttonsKeys.has(value.t)
-        ? <BooleanField
-          className='layout-item-offset-top'
-          item={itemIsBelow}
-          value={state.isBelow ?? false}
-          onChange={onItemChange}
-          isError={isErrors.has('isBelow')}
-        />
-        : <div />
-      }
-      <label className='layout-item-offset-top' >
-        <button onClick={onClick}>{btnLabel}</button>
-      </label>
-    </div>
-  );
-};
+//   return (
+//     <div className='layout-item-container'>
+//       <NumberField
+//         item={itemX}
+//         value={state.x}
+//         onChange={onItemChange}
+//         isError={isErrors.has('x')}
+//       />
+//       <NumberField
+//         item={itemY}
+//         value={state.y}
+//         onChange={onItemChange}
+//         isError={isErrors.has('y')}
+//       />
+//       <EnumField
+//         item={itemT}
+//         value={state.t}
+//         onChange={onItemChange}
+//         isError={isErrors.has('t')}
+//       />
+//       {buttonsKeys.has(value.t)
+//         ? <BooleanField
+//           className='layout-item-offset-top'
+//           item={itemIsBelow}
+//           value={state.isBelow ?? false}
+//           onChange={onItemChange}
+//           isError={isErrors.has('isBelow')}
+//         />
+//         : <div />
+//       }
+//       <label className='layout-item-offset-top' >
+//         <button onClick={onClick}>{btnLabel}</button>
+//       </label>
+//     </div>
+//   );
+// };

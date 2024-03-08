@@ -1,11 +1,26 @@
 import {z} from 'zod';
 
-export const layoutItemSchema = z.object({
+const layoutButtonSchema = z.object({
   x: z.coerce.number().describe('X position of the item'),
   y: z.coerce.number().describe('Y position of the item'),
-  t: z.enum(['obsf24', 'obsf30', 'stick', 'brook']).describe('Type of the item'),
-  isBelow: z.boolean().optional().describe('mounted this button below clear plate'),
+  t: z.enum(['obsf24', 'obsf30']).describe('Type of the item'),
+  mount: z.enum(['belowClearPlate', 'aboveClearPlate']).describe('Mounting position of the item'),
 });
+
+const layoutStickSchema = z.object({
+  x: z.coerce.number().describe('X position of the item'),
+  y: z.coerce.number().describe('Y position of the item'),
+  t: z.enum(['stick']).describe('Type of the item'),
+});
+
+const layoutBrookSchema = z.object({
+  x: z.coerce.number().describe('X position of the item'),
+  y: z.coerce.number().describe('Y position of the item'),
+  t: z.enum(['brook']).describe('Type of the item'),
+  r: z.union([z.literal(0), z.literal(90)]).describe('Rotation of the item'),
+});
+
+export const layoutItemSchema = z.union([layoutButtonSchema, layoutStickSchema, layoutBrookSchema]);
 
 export const schema = z.object({
   width: z.coerce.number().min(200).describe('Width of the case'),

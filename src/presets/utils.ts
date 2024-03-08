@@ -1,7 +1,6 @@
-import {hitbox} from '@layouts/hitbox';
 import {type Config} from '@schema';
 
-const defaultConfig: Config = {
+const defaultConfig: Omit<Config, 'layout'> = {
   width: 406,
   height: 250,
   borders: 2,
@@ -14,7 +13,6 @@ const defaultConfig: Config = {
   clearPlateScrewOffset: 22,
   minDepth: 34,
   clearPlateThickness: 3.5,
-  layout: hitbox,
   layoutOffsetX: 0,
   layoutOffsetY: 0,
   leftOptionButtonsNumber: 2,
