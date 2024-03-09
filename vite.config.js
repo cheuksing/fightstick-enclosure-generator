@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import react from '@vitejs/plugin-react';
 import md from 'vite-plugin-markdown';
 import {parseDxfFile} from './src/utils/parse-dxf.js';
 
@@ -48,7 +49,7 @@ const markdownPlugin = md.default({
 
 export default defineConfig({
   base: '/fightstick-enclosure-generator/',
-  plugins: [tsconfigPaths(), markdownPlugin, dxfPlugin()],
+  plugins: [react(), tsconfigPaths(), markdownPlugin, dxfPlugin()],
   build: {
     sourcemap: true,
   },
