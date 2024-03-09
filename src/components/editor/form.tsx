@@ -51,9 +51,11 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
 
   const onBaseFieldsChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const target = event.target as HTMLInputElement;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
     setInputValue(s => ({
       ...s,
-      [target.name]: target.value,
+      [target.name]: value,
     }));
   }, []);
 
