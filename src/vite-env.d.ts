@@ -2,7 +2,7 @@
 
 import {value} from 'vite/client';
 import type {IModel} from 'makerjs';
-import type {LayoutItem} from '@schema';
+import type {Layout} from '@schema';
 
 declare global {
   declare module '*.md' {
@@ -34,7 +34,7 @@ declare global {
   }
 
   declare module '*.dxf' {
-    const content: LayoutItem[];
+    const content: Layout;
     export default content;
   }
 

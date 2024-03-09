@@ -2,10 +2,6 @@
 
 @import "@picocss/pico/scss/pico";
 
-#app {
-  overflow-x: hidden;
-}
-
 /** React blueprint svg **/
 
 .canvas-container {
@@ -132,10 +128,17 @@ label {
 
 /** Errors Section **/
 .errors-container {
-  position: sticky;
-  z-index: 99;
-  top: var(--pico-spacing);
-  border: var(--pico-border-width) solid var(--pico-form-element-invalid-border-color);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: var(--pico-block-spacing-vertical);
+
+
+  &.error{
+    position: sticky;
+    z-index: 99;
+    top: var(--pico-spacing);
+    border: var(--pico-border-width) solid var(--pico-form-element-invalid-border-color);
+  }
 }
 
 /** Nav **/

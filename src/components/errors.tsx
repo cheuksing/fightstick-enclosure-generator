@@ -6,7 +6,7 @@ type ErrorsProps = {
 };
 
 export const Errors: React.FC<ErrorsProps> = ({errors}) => (
-  <article className={errors && 'errors-container'}>
+  <article className={`errors-container ${errors ? 'error' : ''}`}>
     {errors ? (
       <>
         {errors.formErrors

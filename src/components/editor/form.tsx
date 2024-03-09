@@ -1,21 +1,10 @@
-import React, {useCallback, useEffect, useRef} from 'react';
-import {schema, type Config, refinedSchema} from '@schema';
+import React, {Suspense, useCallback, useEffect, useRef} from 'react';
+import {schema, type Config, refinedSchema, type Layout} from '@schema';
 import {type z} from 'zod';
 import {BooleanField, NumberField} from './fields';
 import {getFormItemFromZodType, useValidateInputValue} from './utils';
 
-// Let layoutItemKey = 0;
-
-// function getLayoutItemMapFromConfig(config: Config) {
-//   const map: Record<string, LayoutItem> = {};
-
-//   for (const layoutItem of config.layout) {
-//     const key = String(layoutItemKey++);
-//     map[key] = layoutItem;
-//   }
-
-//   return map;
-// }
+const ImportDxfButton = React.lazy(async () => import('./dxf-button'));
 
 const baseNumberFields = [
   'width',
@@ -59,39 +48,13 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
     }));
   }, []);
 
-  // Const [layoutItemState, setLayoutItemState] = useState<Record<string, LayoutItem>>(getLayoutItemMapFromConfig(inputValue));
-
-  // const onLayoutChange = useCallback((k: string, v: LayoutItem) => {
-  //   setLayoutItemState(s => ({...s, [k]: v}));
-  // }, []);
-
-  // const onLayoutItemAdd = useCallback(() => {
-  //   const key = String(layoutItemKey++);
-  //   setLayoutItemState(s => ({...s, [key]: {x: 0, y: 0, t: 'obsf24', isBelow: false}}));
-  // }, []);
-
-  // const onLayoutItemRemove = useCallback((k: string) => {
-  //   setLayoutItemState(s => {
-  //     const nextState = {...s};
-  //     delete nextState[k]; // eslint-disable-line @typescript-eslint/no-dynamic-delete
-  //     return nextState;
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isInitialMount.current) {
-  //     return;
-  //   }
-
-  //   setInputValue(s => ({
-  //     ...s,
-  //     layout: Object.keys(layoutItemState).sort().map(k => ({
-  //       ...layoutItemState[k],
-  //       x: layoutItemState[k].x,
-  //       y: layoutItemState[k].y,
-  //     })),
-  //   }));
-  // }, [layoutItemState]);
+  const onLayoutChange = useCallback((layout: Layout) => {
+    console.log('layout', layout);
+    setInputValue(s => ({
+      ...s,
+      layout,
+    }));
+  }, []);
 
   useEffect(() => {
     onErrorsChange(errors);
@@ -169,18 +132,32 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
 
   return (
     <>
-      <h6>
+      <h4>
         Edit basic parameters of the fightstick enclosure.
-      </h6>
+      </h4>
       {BaseFieldsInGrid.map((row, i) => (
         <div key={i} className='grid'>
           {row}
         </div>
       ))}
-      {/* <h6>
+      <h4>
         Edit positions of Layout Items, such as buttons / sticks / brook pcb.
+      </h4>
+      <h5>
+        You can import a DXF file to set the layout items.
+        The layout items will be centered to the dxf origin.
+      </h5>
+      <h6>
+        Item must put in these specific layers:<br /><br />
+        &emsp;<ins>button</ins>: circles with diameter of 24mm or 30mm.<br /><br />
+        &emsp;<ins>stick</ins>: circle which refer to the center of the stick.<br /><br />
+        &emsp;<ins>brook</ins>: a 100mm * 50mm or 50mm * 100mm rectangle.<br /><br />
       </h6>
-      {Object.keys(layoutItemState).map(k => (
+
+      <Suspense fallback={<button>Import DXF</button>}>
+        <ImportDxfButton onChange={onLayoutChange} />
+      </Suspense>
+      {/* {Object.keys(layoutItemState).map(k => (
         <LayoutItemField
           key={k}
           uniqueKey={k}
@@ -191,6 +168,7 @@ export const EditorForm: React.FC<EditorFormProps> = ({config, onConfigChange, o
         />
       ))}
       <button onClick={onLayoutItemAdd}>Add Layout Item</button> */}
+      <p />
     </>
   );
 };
