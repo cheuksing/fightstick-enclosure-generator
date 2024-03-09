@@ -19,7 +19,6 @@ function dxfPlugin() {
           // Need to check for EOF because this can fire when the file is still being written
           const lastTenChars = code.slice(-10);
           const eof = lastTenChars.lastIndexOf('EOF') !== -1;
-          console.log('eof', eof);
 
           if (eof) {
             const result = await parseDxfFile(code);
