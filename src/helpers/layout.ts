@@ -10,13 +10,16 @@ type DrawOptions = {
   isClearPlate: boolean;
 };
 
-export function walkLayout(cb: (i: Required<LayoutItem>) => void) {
+export function walkLayout(cb: (i: LayoutItem) => void) {
   const {layout, layoutOffsetX, layoutOffsetY} = getConfig();
 
-  for (const {x: _x, y: _y, t, isBelow} of layout) {
+  for (const item of layout) {
+    const {x: _x, y: _y} = item;
     const x = _x + layoutOffsetX;
     const y = _y + layoutOffsetY;
-    cb({x, y, t, isBelow: isBelow ?? false});
+
+    // Convert to absolute position
+    cb({...item, x, y});
   }
 }
 
@@ -25,20 +28,24 @@ export function layout({relativeOrigin, isClearPlate}: DrawOptions) {
   const obsf24BelowPlatePts: IPoint[] = [];
   const obsf30Pts: IPoint[] = [];
   const obsf30BelowPlate: IPoint[] = [];
-  const brookPts: IPoint[] = [];
+  const brookPts: Array<[number, number, number]> = [];
   const stickPts: IPoint[] = [];
 
-  walkLayout(({x, y, t, isBelow}) => {
+  walkLayout(item => {
+    const {x, y, t} = item;
+
     if (t === 'obsf24') {
-      (isBelow ? obsf24BelowPlatePts : obsf24Pts).push([x, y]);
+      const mount = item.mount;
+      (mount === 'belowClearPlate' ? obsf24BelowPlatePts : obsf24Pts).push([x, y]);
     }
 
     if (t === 'obsf30') {
-      (isBelow ? obsf30BelowPlate : obsf30Pts).push([x, y]);
+      const mount = item.mount;
+      (mount === 'belowClearPlate' ? obsf30BelowPlate : obsf30Pts).push([x, y]);
     }
 
     if (t === 'brook' && !isClearPlate) {
-      brookPts.push([x, y]);
+      brookPts.push([x, y, item.r]);
     }
 
     if (t === 'stick') {

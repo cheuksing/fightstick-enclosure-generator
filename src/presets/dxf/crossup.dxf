@@ -91,7 +91,7 @@ STANDARD
   9
 $CLAYER
   8
-reference
+brook
   9
 $CELTYPE
   6
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-46.49524229767579
+299.8294040757599
  22
-77.30363992957039
+121.112352630738
  13
 0
  23
@@ -1143,9 +1143,9 @@ AcDbViewportTableRecord
  37
 0
  40
-302.9963510219359
+445.3677774051342
  41
-0.9048507462686567
+2.462522851919561
  42
 50
  43
@@ -2255,11 +2255,11 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-button
+brook
  70
-    4
+    0
  62
-    3
+    4
   6
 CONTINUOUS
 370
@@ -2277,11 +2277,11 @@ AcDbSymbolTableRecord
 100
 AcDbLayerTableRecord
   2
-joystick
+button
  70
     4
  62
-    2
+    3
   6
 CONTINUOUS
 370
@@ -2301,9 +2301,31 @@ AcDbLayerTableRecord
   2
 reference
  70
-    4
+    0
  62
     6
+  6
+CONTINUOUS
+370
+    0
+390
+F
+  0
+LAYER
+  5
+4D
+330
+2
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+stick
+ 70
+    4
+ 62
+    2
   6
 CONTINUOUS
 370
@@ -2327,7 +2349,7 @@ AcDbSymbolTable
   0
 STYLE
   5
-4D
+4E
 330
 2
 100
@@ -2411,7 +2433,7 @@ ACAD
   0
 APPID
   5
-4E
+4F
 330
 9
 100
@@ -2443,7 +2465,7 @@ AcDbDimStyleTable
   0
 DIMSTYLE
 105
-4F
+50
 330
 A
 100
@@ -2715,207 +2737,9 @@ SECTION
   2
 ENTITIES
   0
-LWPOLYLINE
-  5
-50
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbPolyline
- 90
-    8
- 70
-    1
- 43
-0
- 10
--175.5
- 20
-123.5
- 10
-175.5
- 20
-123.5
- 42
--0.414213562373095
- 10
-177.5
- 20
-121.5
- 10
-177.5
- 20
--121.5
- 42
--0.414213562373095
- 10
-175.5
- 20
--123.5
- 10
--175.5
- 20
--123.5
- 42
--0.414213562373095
- 10
--177.5
- 20
--121.5
- 10
--177.5
- 20
-121.5
- 42
--0.414213562373095
-  0
-CIRCLE
+LINE
   5
 51
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
--155.5
- 20
-100.5
- 40
-2
-  0
-CIRCLE
-  5
-52
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
--155.5
- 20
--100.5
- 40
-2
-  0
-CIRCLE
-  5
-53
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
-155.5
- 20
-100.5
- 40
-2
-  0
-LINE
-  5
-54
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbLine
- 10
-155.5
- 20
-100.5
- 11
--155.5
- 21
--100.5
-  0
-CIRCLE
-  5
-55
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
-155.5
- 20
--100.5
- 40
-2
-  0
-LINE
-  5
-56
-100
-AcDbEntity
-  8
-reference
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbLine
- 10
--155.5
- 20
-100.5
- 11
-155.5
- 21
--100.5
-  0
-LINE
-  5
-57
 100
 AcDbEntity
   8
@@ -2939,7 +2763,7 @@ AcDbLine
   0
 CIRCLE
   5
-58
+52
 100
 AcDbEntity
   8
@@ -2961,7 +2785,7 @@ AcDbCircle
   0
 CIRCLE
   5
-59
+53
 100
 AcDbEntity
   8
@@ -2983,7 +2807,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5A
+54
 100
 AcDbEntity
   8
@@ -3005,7 +2829,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5B
+55
 100
 AcDbEntity
   8
@@ -3027,7 +2851,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5C
+56
 100
 AcDbEntity
   8
@@ -3049,7 +2873,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5D
+57
 100
 AcDbEntity
   8
@@ -3071,7 +2895,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5E
+58
 100
 AcDbEntity
   8
@@ -3093,7 +2917,7 @@ AcDbCircle
   0
 CIRCLE
   5
-5F
+59
 100
 AcDbEntity
   8
@@ -3115,7 +2939,7 @@ AcDbCircle
   0
 CIRCLE
   5
-60
+5A
 100
 AcDbEntity
   8
@@ -3137,7 +2961,7 @@ AcDbCircle
   0
 CIRCLE
   5
-61
+5B
 100
 AcDbEntity
   8
@@ -3159,7 +2983,7 @@ AcDbCircle
   0
 CIRCLE
   5
-62
+5C
 100
 AcDbEntity
   8
@@ -3181,7 +3005,7 @@ AcDbCircle
   0
 CIRCLE
   5
-63
+5D
 100
 AcDbEntity
   8
@@ -3203,11 +3027,11 @@ AcDbCircle
   0
 CIRCLE
   5
-64
+5E
 100
 AcDbEntity
   8
-joystick
+stick
   6
 ByLayer
  62
@@ -3225,7 +3049,7 @@ AcDbCircle
   0
 LINE
   5
-65
+5F
 100
 AcDbEntity
   8
@@ -3246,6 +3070,44 @@ AcDbLine
 -63
  21
 8.326721250001512
+  0
+LWPOLYLINE
+  5
+60
+100
+AcDbEntity
+  8
+brook
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbPolyline
+ 90
+    4
+ 70
+    1
+ 43
+0
+ 10
+-160
+ 20
+70
+ 10
+-160
+ 20
+-30
+ 10
+-110
+ 20
+-30.00000000000001
+ 10
+-110
+ 20
+69.99999999999999
   0
 ENDSEC
   0
@@ -3279,7 +3141,7 @@ AcDbDictionary
   0
 PLOTSETTINGS
   5
-66
+61
 100
 AcDbPlotSettings
   6

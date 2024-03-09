@@ -1,8 +1,8 @@
-import {crossup} from '@layouts/crossup';
+import crossup from './dxf/crossup.dxf';
 import {createPreset} from './utils';
 
 export const crossupPreset = createPreset('hitboxCrossup', 'Hitbox Cross-up', {
-  layout: [...crossup, {x: -200, y: 0, t: 'brook'}],
+  layout: crossup,
   width: 450,
   height: 250,
   palmRest: 60,

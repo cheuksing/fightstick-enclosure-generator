@@ -2,6 +2,7 @@
 
 import {value} from 'vite/client';
 import type {IModel} from 'makerjs';
+import type {LayoutItem} from '@schema';
 
 declare global {
   declare module '*.md' {
@@ -30,6 +31,11 @@ declare global {
 
     // Modify below per your usage
     export {attributes, toc, html, ReactComponent, VueComponent, VueComponentWith};
+  }
+
+  declare module '*.dxf' {
+    const content: LayoutItem[];
+    export default content;
   }
 
 }

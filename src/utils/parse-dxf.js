@@ -15,7 +15,10 @@ function isAxisAlignedRectangle(polyline) {
     const nextIndex = (i + 1) % 4;
     const dx = polyline.vertices[i].x - polyline.vertices[nextIndex].x;
     const dy = polyline.vertices[i].y - polyline.vertices[nextIndex].y;
-    if (dx !== 0 && dy !== 0) {
+
+    // Fix floating point issue
+    const zero = 0.000_000_1;
+    if (dx >= zero && dy >= zero) {
       return false;
     }
   }
@@ -96,11 +99,24 @@ export async function parseDxfFile(dxfString) {
     const width = rightX - leftX;
     const height = topY - bottomY;
 
+    const isVertical = height > width;
+
+    if (isVertical) {
+      result.push({
+        x: leftX + width,
+        y: bottomY,
+        t: 'brook',
+        r: 90,
+      });
+
+      continue;
+    }
+
     result.push({
       x: leftX,
       y: bottomY,
       t: 'brook',
-      r: width > height ? 0 : 90,
+      r: 0,
     });
   }
 

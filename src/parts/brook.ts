@@ -3,11 +3,14 @@ import {type IPoint, point, model, paths, path, type IModel} from 'makerjs';
 import {screwHoles} from '@fasteners/screw';
 
 type BrookDrawOptions = {
-  point: IPoint;
+  x: number;
+  y: number;
+  r: number;
 };
 
 type BrooksDrawOptions = {
-  points: IPoint[];
+  // X, y, r
+  points: Array<[number, number, number]>;
 };
 
 const pcbSize = [96.0122, 45.0091];
@@ -19,10 +22,11 @@ const brookHoles = [
   [0, 36.96],
 ];
 
-function brook({point}: BrookDrawOptions) {
+function brook({x, y, r}: BrookDrawOptions) {
   const m4 = screwHoles({points: brookHoles, size: 'm4'});
-  model.move(m4, point);
+  model.move(m4, [x, y]);
   m4.layer = LayerName.m4Countersunk;
+  model.rotate(m4, r, [x, y]);
   return m4;
 }
 
@@ -31,8 +35,8 @@ export function brookPcbsMountingHoles({points}: BrooksDrawOptions) {
     models: {},
   };
 
-  for (const [i, point] of points.entries()) {
-    const b = brook({point});
+  for (const [i, [x, y, r]] of points.entries()) {
+    const b = brook({x, y, r});
     brookPcbsMountingHoles.models[`brookPcbsMountingHoles${i}`] = b;
   }
 

@@ -1,6 +1,6 @@
-import {hitbox} from '@layouts/hitbox';
+import hitbox from './dxf/hitbox.dxf';
 import {createPreset} from './utils';
 
 export const hitboxPreset = createPreset('hitbox', 'Original Hitbox', {
-  layout: [...hitbox, {x: -115, y: -60, t: 'brook'}],
+  layout: hitbox,
 });

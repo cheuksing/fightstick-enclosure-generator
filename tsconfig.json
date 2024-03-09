@@ -30,7 +30,6 @@
     "paths": {
       "@fasteners/*": ["src/fasteners/*"],
       "@parts/*": ["src/parts/*"],
-      "@layouts/*": ["src/layouts/*"],
       "@helpers/*": ["src/helpers/*"],
       "@config": ["src/config.ts"],
       "@schema": ["src/schema.ts"],
