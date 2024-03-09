@@ -21,11 +21,14 @@ function dxfPlugin() {
 
         if (eof) {
           const result = await parseDxfFile(code);
-          string = JSON.stringify(result);
+          string = `export default ${JSON.stringify(result)}`;
           cache.set(id, string);
         }
 
-        return `export default ${string};`;
+        return {
+          code: string,
+          map: null,
+        };
       }
     },
   };
@@ -40,6 +43,9 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths(), markdownPlugin, dxfPlugin()],
   build: {
     sourcemap: true,
+    rollupOptions: {
+      plugins: [dxfPlugin()],
+    },
   },
   worker: {
     plugins: () => [tsconfigPaths()],
