@@ -49,7 +49,7 @@ export const EditorJson: React.FC<EditorJsonProps> = ({config, onConfigChange, o
 
   return (
     <textarea
-      rows={40}
+      rows={9}
       value={jsonString}
       onChange={onInputChange}
       {...(errors && {'aria-invalid': 'true'})}
