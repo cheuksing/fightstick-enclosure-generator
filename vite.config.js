@@ -14,29 +14,18 @@ function dxfPlugin() {
       if (id.endsWith('.dxf')) {
         let string = cache.get(id);
 
-        if (!string) {
-          // If the file has been modified, re-parse it
-          // Need to check for EOF because this can fire when the file is still being written
-          const lastTenChars = code.slice(-10);
-          const eof = lastTenChars.lastIndexOf('EOF') !== -1;
+        // If the file has been modified, re-parse it
+        // Need to check for EOF because this can fire when the file is still being written
+        const lastTenChars = code.slice(-10);
+        const eof = lastTenChars.lastIndexOf('EOF') !== -1;
 
-          if (eof) {
-            const result = await parseDxfFile(code);
-            string = JSON.stringify(result);
-            cache.set(id, string);
-          }
+        if (eof) {
+          const result = await parseDxfFile(code);
+          string = JSON.stringify(result);
+          cache.set(id, string);
         }
 
         return `export default ${string};`;
-      }
-    },
-    handleHotUpdate({file, server}) {
-      if (file.endsWith('.dxf')) {
-        cache.delete(file);
-        const module = server.moduleGraph.getModuleById(file);
-        if (module) {
-          server.moduleGraph.invalidateModule(module);
-        }
       }
     },
   };
