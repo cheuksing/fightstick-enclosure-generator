@@ -1,6 +1,7 @@
 import {type Config} from '@schema';
+import hitbox from './dxf/hitbox.dxf';
 
-const defaultConfig: Omit<Config, 'layout'> = {
+const defaultConfig: Config = {
   width: 406,
   height: 250,
   borders: 2,
@@ -18,6 +19,7 @@ const defaultConfig: Omit<Config, 'layout'> = {
   leftOptionButtonsNumber: 2,
   rightOptionButtonsNumber: 2,
   mergeFrontBackCorners: false,
+  layout: hitbox,
 };
 
 export function createPreset(id: string, name: string, config: Partial<Config>) {

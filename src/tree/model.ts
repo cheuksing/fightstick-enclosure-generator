@@ -9,10 +9,14 @@ import {type Config} from '@schema';
 export function buildModelTree(config: Config) {
   const computedConfig = computeAndSetConfig(config); // Compute config
 
+  const c = corners();
+
+  const isFrontBackMerged = Boolean(c?.models?.layer0?.models?.left);
+
   const tree = {
     models: {
-      corners: corners(),
-      sidePlates: sidePlates(),
+      corners: c,
+      sidePlates: sidePlates(isFrontBackMerged),
       clearPlate: clearPlate(),
       topPlate: topPlate(),
       bottomPlate: bottomPlate(),

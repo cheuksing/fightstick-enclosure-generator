@@ -1,5 +1,5 @@
 import {LayerName} from '@helpers/color';
-import {type IPoint, point, model, paths, path, type IModel} from 'makerjs';
+import {point, model, paths, path, type IModel} from 'makerjs';
 import {screwHoles} from '@fasteners/screw';
 
 type BrookDrawOptions = {
@@ -43,7 +43,7 @@ export function brookPcbsMountingHoles({points}: BrooksDrawOptions) {
   return brookPcbsMountingHoles;
 }
 
-export function brookStandoff(options: BrookDrawOptions) {
+export function brookStandoff({x, y}: BrookDrawOptions) {
   const ptLeftBottom = brookHoles[0];
   const ptLeftTop = brookHoles[3];
   const ptRightTop = brookHoles[1];
@@ -80,7 +80,7 @@ export function brookStandoff(options: BrookDrawOptions) {
 
   model.addModel(m, screwHoles({points: brookHoles, size: 'm4'}), 'holes');
 
-  model.move(m, options.point);
+  model.move(m, [x, y]);
 
   return m;
 }

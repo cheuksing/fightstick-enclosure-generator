@@ -88,7 +88,7 @@ export function cadModelTree(tree: ModelTree, config: Config) {
   printLine('clearPlate');
 
   if (config.layout.some(({t}) => t === 'brook')) {
-    const brookStandoffPlate = brookStandoff({point: [0, 0]});
+    const brookStandoffPlate = brookStandoff({x: 0, y: 0, r: 0});
     line = [brookStandoffPlate];
     printLine('brookStandoffPlate');
   }

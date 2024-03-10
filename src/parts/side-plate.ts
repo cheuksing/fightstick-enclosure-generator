@@ -126,11 +126,8 @@ export function sidePlateBack() {
   return m;
 }
 
-export function sidePlates() {
+export function sidePlates(isFrontBackMerged: boolean) {
   const {cornerScrewPositions, conrerScrewMagicNumber, leftOptionButtonsNumber, rightOptionButtonsNumber} = getConfig();
-
-  const left = sidePlateLeft();
-  const right = mirrorY(left);
 
   const back = sidePlateBack();
 
@@ -160,6 +157,18 @@ export function sidePlates() {
   });
 
   front.models.neutrik = neutrik({point: [ext.width / 2, -y]});
+
+  if (isFrontBackMerged) {
+    return {
+      models: {
+        front,
+        back,
+      },
+    };
+  }
+
+  const left = sidePlateLeft();
+  const right = mirrorY(left);
 
   return {
     models: {
