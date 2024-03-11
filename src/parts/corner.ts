@@ -43,24 +43,26 @@ function frontLeftVerticalScrews(layerIdx: number) {
   return {m4, nut};
 }
 
-function frontLeftHorizontalScrews(layerIdx: number, originalBorder: IModel) {
+function frontLeftHorizontalScrews(layerIdx: number, originalBorder: IModel, axis: 'x' | 'xy') {
   const {sidePlateScrewPositions, sidePlateScrewLayers} = getConfig();
 
   const isHoleLayer = sidePlateScrewLayers.includes(layerIdx);
   const isNutOnlyLayer = sidePlateScrewLayers.includes(layerIdx - 1) || sidePlateScrewLayers.includes(layerIdx + 1);
 
   if (isHoleLayer || isNutOnlyLayer) {
-    const left = nutHolesHorizontal({points: [sidePlateScrewPositions.left.front], size: 'm4', direction: 'left', isCenter: isHoleLayer});
-    const front = nutHolesHorizontal({points: [sidePlateScrewPositions.front.left], size: 'm4', direction: 'front', isCenter: isHoleLayer});
+    const b = {};
 
-    const tJoint = {
-      models: {
-        left,
-        front,
-      },
-    };
+    if (axis.includes('y')) {
+      const y = nutHolesHorizontal({points: [sidePlateScrewPositions.left.front], size: 'm4', direction: 'left', isCenter: isHoleLayer});
+      model.addModel(b, y, 'horizontalScrewY');
+    }
 
-    const combinedBorder = model.combineSubtraction(originalBorder, tJoint);
+    if (axis.includes('x')) {
+      const x = nutHolesHorizontal({points: [sidePlateScrewPositions.front.left], size: 'm4', direction: 'front', isCenter: isHoleLayer});
+      model.addModel(b, x, 'horizontalScrewX');
+    }
+
+    const combinedBorder = model.combineSubtraction(originalBorder, b);
     return combinedBorder;
   }
 
@@ -77,7 +79,7 @@ function frontLeftCorner(layerIdx: number) {
   model.moveRelative(rect, [0, height - h]);
 
   let border: IModel = rect;
-  border = frontLeftHorizontalScrews(layerIdx, border);
+  border = frontLeftHorizontalScrews(layerIdx, border, 'xy');
   border = model.combineSubtraction(border, sidePlatesVertical());
   border = model.combineIntersection(border, common());
 
@@ -133,24 +135,26 @@ function backLeftVerticalScrews(layerIdx: number) {
   return {m4, nut};
 }
 
-function backLeftHorizontalScrews(layerIdx: number, originalBorder: IModel) {
+function backLeftHorizontalScrews(layerIdx: number, originalBorder: IModel, axis: 'x' | 'xy') {
   const {sidePlateScrewPositions, sidePlateScrewLayers} = getConfig();
 
   const isHoleLayer = sidePlateScrewLayers.includes(layerIdx);
   const isNutOnlyLayer = sidePlateScrewLayers.includes(layerIdx - 1) || sidePlateScrewLayers.includes(layerIdx + 1);
 
   if (isHoleLayer || isNutOnlyLayer) {
-    const left = nutHolesHorizontal({points: [sidePlateScrewPositions.left.back], size: 'm4', direction: 'left', isCenter: isHoleLayer});
-    const back = nutHolesHorizontal({points: [sidePlateScrewPositions.back.left], size: 'm4', direction: 'back', isCenter: isHoleLayer});
-
     const a = model.clone(originalBorder);
 
-    const b = {
-      models: {
-        left,
-        back,
-      },
-    };
+    const b = {};
+
+    if (axis.includes('y')) {
+      const y = nutHolesHorizontal({points: [sidePlateScrewPositions.left.back], size: 'm4', direction: 'left', isCenter: isHoleLayer});
+      model.addModel(b, y, 'horizontalScrewY');
+    }
+
+    if (axis.includes('x')) {
+      const x = nutHolesHorizontal({points: [sidePlateScrewPositions.back.left], size: 'm4', direction: 'back', isCenter: isHoleLayer});
+      model.addModel(b, x, 'horizontalScrewX');
+    }
 
     const combinedBorder = model.combineSubtraction(a, b);
     return combinedBorder;
@@ -165,7 +169,7 @@ function backLeftCorner(layerIdx: number) {
   const rect = new models.Rectangle(w, h);
 
   let border: IModel = rect;
-  border = backLeftHorizontalScrews(layerIdx, border);
+  border = backLeftHorizontalScrews(layerIdx, border, 'xy');
   border = model.combineSubtraction(border, sidePlatesVertical());
   border = model.combineIntersection(border, common());
 
@@ -192,9 +196,9 @@ function leftStandoff(layerIdx: number) {
 
   let border: IModel = new models.Rectangle(width, height);
 
-  border = frontLeftHorizontalScrews(layerIdx, border);
-  border = backLeftHorizontalScrews(layerIdx, border);
-  border = model.combineSubtraction(border, sidePlatesVertical());
+  border = frontLeftHorizontalScrews(layerIdx, border, 'x');
+  border = backLeftHorizontalScrews(layerIdx, border, 'x');
+  // Border = model.combineSubtraction(border, sidePlatesVertical());
   border = model.combineIntersection(border, common());
 
   const flvs = frontLeftVerticalScrews(layerIdx);
