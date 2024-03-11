@@ -60,11 +60,13 @@ export function cadModelTree(tree: ModelTree, config: Config) {
     }
   }
 
-  const leftSidePlate = model.clone(tree.models.sidePlates.models.left);
-  const rightSidePlate = model.clone(tree.models.sidePlates.models.right);
+  if (tree.models.sidePlates.models.left && tree.models.sidePlates.models.right) {
+    const leftSidePlate = model.clone(tree.models.sidePlates.models.left);
+    const rightSidePlate = model.clone(tree.models.sidePlates.models.right);
 
-  line = [leftSidePlate, rightSidePlate];
-  printLine('sidePlatesX');
+    line = [leftSidePlate, rightSidePlate];
+    printLine('sidePlatesX');
+  }
 
   const backSidePlate = model.clone(tree.models.sidePlates.models.back);
 
