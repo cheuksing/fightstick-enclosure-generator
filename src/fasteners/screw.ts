@@ -1,6 +1,6 @@
 import {type IPoint, models, type IModel} from 'makerjs';
 
-export type ScrewSize = 'm4';
+export type ScrewSize = 'm3' | 'm4';
 
 export type ScrewSpecs = {
   holeRadius: number;
@@ -13,6 +13,10 @@ type DrawOptions = {
 };
 
 export const screwSpecs: Record<ScrewSize, ScrewSpecs> = {
+  m3: {
+    headDiameter: 6,
+    holeRadius: 1.5,
+  },
   m4: {
     headDiameter: 8,
     holeRadius: 2,

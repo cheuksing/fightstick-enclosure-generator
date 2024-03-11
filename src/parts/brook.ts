@@ -23,11 +23,11 @@ const brookHoles = [
 ];
 
 function brook({x, y, r}: BrookDrawOptions) {
-  const m4 = screwHoles({points: brookHoles, size: 'm4'});
-  model.move(m4, [x, y]);
-  m4.layer = LayerName.m4Countersunk;
-  model.rotate(m4, r, [x, y]);
-  return m4;
+  const m3 = screwHoles({points: brookHoles, size: 'm3'});
+  model.move(m3, [x, y]);
+  m3.layer = LayerName.m3Countersunk;
+  model.rotate(m3, r, [x, y]);
+  return m3;
 }
 
 export function brookPcbsMountingHoles({points}: BrooksDrawOptions) {
