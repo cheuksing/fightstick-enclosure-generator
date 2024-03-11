@@ -43,44 +43,47 @@ export function brookPcbsMountingHoles({points}: BrooksDrawOptions) {
   return brookPcbsMountingHoles;
 }
 
-export function brookStandoff({x, y}: BrookDrawOptions) {
-  const ptLeftBottom = brookHoles[0];
-  const ptLeftTop = brookHoles[3];
-  const ptRightTop = brookHoles[1];
-  const ptRightBottom = brookHoles[2];
+/**
+ * Not working. Need redesign
+ */
+// export function brookStandoff({x, y}: BrookDrawOptions) {
+//   const ptLeftBottom = brookHoles[0];
+//   const ptLeftTop = brookHoles[3];
+//   const ptRightTop = brookHoles[1];
+//   const ptRightBottom = brookHoles[2];
 
-  const safeArea = Math.max((pcbSize[0] - ptRightTop[0]) / 2, (pcbSize[1] - ptRightTop[1]) / 2) + 3;
-  const strokeWidth = 10;
+//   const safeArea = Math.max((pcbSize[0] - ptRightTop[0]) / 2, (pcbSize[1] - ptRightTop[1]) / 2) + 3;
+//   const strokeWidth = 10;
 
-  const dist = safeArea + (strokeWidth / 2);
+//   const dist = safeArea + (strokeWidth / 2);
 
-  const offsetPtLeftTop = point.add(ptLeftTop, [-dist, dist]);
-  const offsetPtRightTop = point.add(ptRightTop, [dist, dist]);
-  const offsetPtLeftBottom = point.add(ptLeftBottom, [-dist, -dist]);
-  const offsetPtRightBottom = point.add(ptRightBottom, [dist, -dist]);
+//   const offsetPtLeftTop = point.add(ptLeftTop, [-dist, dist]);
+//   const offsetPtRightTop = point.add(ptRightTop, [dist, dist]);
+//   const offsetPtLeftBottom = point.add(ptLeftBottom, [-dist, -dist]);
+//   const offsetPtRightBottom = point.add(ptRightBottom, [dist, -dist]);
 
-  const left = new paths.Line(offsetPtLeftBottom, offsetPtLeftTop);
-  const right = new paths.Line(offsetPtRightBottom, offsetPtRightTop);
-  const bottom = new paths.Line(offsetPtLeftBottom, offsetPtRightBottom);
+//   const left = new paths.Line(offsetPtLeftBottom, offsetPtLeftTop);
+//   const right = new paths.Line(offsetPtRightBottom, offsetPtRightTop);
+//   const bottom = new paths.Line(offsetPtLeftBottom, offsetPtRightBottom);
 
-  const screwSupportLeftTop = new paths.Line(ptLeftTop, offsetPtLeftTop);
-  const screwSupportRightTop = new paths.Line(ptRightTop, offsetPtRightTop);
-  const screwSupportLeftBottom = new paths.Line(ptLeftBottom, offsetPtLeftBottom);
-  const screwSupportRightBottom = new paths.Line(ptRightBottom, offsetPtRightBottom);
+//   const screwSupportLeftTop = new paths.Line(ptLeftTop, offsetPtLeftTop);
+//   const screwSupportRightTop = new paths.Line(ptRightTop, offsetPtRightTop);
+//   const screwSupportLeftBottom = new paths.Line(ptLeftBottom, offsetPtLeftBottom);
+//   const screwSupportRightBottom = new paths.Line(ptRightBottom, offsetPtRightBottom);
 
-  let m = {};
+//   let m = {};
 
-  m = model.combineUnion(path.expand(left, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(right, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(bottom, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(screwSupportLeftTop, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(screwSupportRightTop, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(screwSupportLeftBottom, strokeWidth / 2), m);
-  m = model.combineUnion(path.expand(screwSupportRightBottom, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(left, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(right, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(bottom, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(screwSupportLeftTop, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(screwSupportRightTop, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(screwSupportLeftBottom, strokeWidth / 2), m);
+//   m = model.combineUnion(path.expand(screwSupportRightBottom, strokeWidth / 2), m);
 
-  model.addModel(m, screwHoles({points: brookHoles, size: 'm4'}), 'holes');
+//   model.addModel(m, screwHoles({points: brookHoles, size: 'm4'}), 'holes');
 
-  model.move(m, [x, y]);
+//   model.move(m, [x, y]);
 
-  return m;
-}
+//   return m;
+// }

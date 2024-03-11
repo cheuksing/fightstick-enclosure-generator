@@ -1,6 +1,6 @@
 import {type IModel, measure, model} from 'makerjs';
 import {type Config} from '@schema';
-import {brookStandoff} from '@parts/brook';
+// Import {brookStandoff} from '@parts/brook';
 import {dxfLayerOptions, svgLayerOptions} from '@helpers/color';
 import {type ModelTree} from './model';
 
@@ -89,11 +89,11 @@ export function cadModelTree(tree: ModelTree, config: Config) {
   line = [clearPlate];
   printLine('clearPlate');
 
-  if (config.layout.some(({t}) => t === 'brook')) {
-    const brookStandoffPlate = brookStandoff({x: 0, y: 0, r: 0});
-    line = [brookStandoffPlate];
-    printLine('brookStandoffPlate');
-  }
+  // If (config.layout.some(({t}) => t === 'brook')) {
+  //   const brookStandoffPlate = brookStandoff({x: 0, y: 0, r: 0});
+  //   line = [brookStandoffPlate];
+  //   printLine('brookStandoffPlate');
+  // }
 
   m.exporterOptions = {
     toDXF: { // eslint-disable-line @typescript-eslint/naming-convention
