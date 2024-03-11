@@ -9,8 +9,10 @@
   margin-top: var(--pico-spacing);
   margin-bottom: var(--pico-spacing);
 
+  height: 600px;
+  max-height: 60vh;
+
   & > * {
-    height: 414px;
     background-color: #3177C6;
   }
 
