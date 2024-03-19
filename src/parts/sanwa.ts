@@ -51,8 +51,8 @@ function button({size, isClearPlate, isAboveClearPlate}: ButtonOptions) {
   const slotLength = (3 + ir) * 2;
 
   const slot = {
-    ...new models.Rectangle((or - ir) * 2, slotLength),
-    origin: [-(or - ir), -slotLength / 2],
+    ...new models.Rectangle(7, slotLength),
+    origin: [-7 / 2, -slotLength / 2],
   };
 
   // Rotate 20 degree should avoid the slot collided with other slot in most layout

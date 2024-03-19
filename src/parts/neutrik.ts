@@ -16,12 +16,16 @@ export function neutrik({point}: DrawOptions) {
   const hole1 = new paths.Circle([0, 0], 23.6 / 2);
   const screw1 = new paths.Circle([19 / 2, 24 / 2], 3.1 / 2);
   const screw2 = new paths.Circle([-19 / 2, -24 / 2], 3.1 / 2);
+  const screw3 = new paths.Circle([-19 / 2, 24 / 2], 3.1 / 2);
+  const screw4 = new paths.Circle([19 / 2, -24 / 2], 3.1 / 2);
 
   const m = {
     paths: {
       hole1,
       screw1,
       screw2,
+      screw3,
+      screw4,
     },
   };
 

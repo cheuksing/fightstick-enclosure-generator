@@ -6,7 +6,6 @@ export type Nut = {
   sideToSide: number;
   thickness: number;
   holeRadius: number;
-  borderRadius: number;
 };
 
 type VerticalDrawOptions = {
@@ -19,7 +18,6 @@ export const nutSpecs: Record<ScrewSize, Nut> = {
     sideToSide: 7,
     thickness: 3.2,
     holeRadius: 2,
-    borderRadius: 7.7,
   },
 };
 
@@ -34,7 +32,7 @@ export function nutHolesVertical({
   };
 
   for (const [i, point] of points.entries()) {
-    const hole = new models.Polygon(6, s.sideToSide / 2, 90);
+    const hole = new models.Polygon(6, s.sideToSide / 2, 90, true);
     model.move(hole, point);
     holes.models[`nut${i}`] = hole;
   }
@@ -69,8 +67,8 @@ function tJoint({size, isCenter}: {size: ScrewSize; isCenter: boolean}) {
 
   if (isCenter) {
     const holes = {
-      ...new models.Rectangle(largeNumber, s.holeRadius),
-      origin: [-largeNumber + safeNumber, -s.holeRadius / 2],
+      ...new models.Rectangle(largeNumber, s.holeRadius * 2),
+      origin: [-largeNumber + safeNumber, -s.holeRadius],
     };
 
     model.combineUnion(nut, holes);
