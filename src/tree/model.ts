@@ -5,6 +5,7 @@ import {bottomPlate} from '@parts/bottom-plate';
 import {topPlate} from '@parts/top-plate';
 import {computeAndSetConfig} from '@config';
 import {type Config} from '@schema';
+import {artworkReference} from '@parts/artwork-reference';
 
 export function buildModelTree(config: Config) {
   const computedConfig = computeAndSetConfig(config); // Compute config
@@ -20,6 +21,7 @@ export function buildModelTree(config: Config) {
       clearPlate: clearPlate(),
       topPlate: topPlate(),
       bottomPlate: bottomPlate(),
+      artworkReference: artworkReference(),
     },
   };
 

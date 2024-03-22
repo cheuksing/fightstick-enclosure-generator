@@ -89,6 +89,10 @@ export function cadModelTree(tree: ModelTree, config: Config) {
   line = [clearPlate];
   printLine('clearPlate');
 
+  const artworkReference = model.clone(tree.models.artworkReference);
+  line = [artworkReference];
+  printLine('artworkReference');
+
   // If (config.layout.some(({t}) => t === 'brook')) {
   //   const brookStandoffPlate = brookStandoff({x: 0, y: 0, r: 0});
   //   line = [brookStandoffPlate];

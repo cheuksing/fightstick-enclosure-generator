@@ -163,6 +163,8 @@ export function sidePlates(isFrontBackMerged: boolean) {
       models: {
         front,
         back,
+        left: {},
+        right: {},
       },
     };
   }

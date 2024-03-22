@@ -17,7 +17,12 @@ export function clearPlate() {
   const toAbsolutePosition = [config.borders, config.borders + config.palmRest];
 
   // If below plate's buttons close to the edge, reduce clear plate size
-  walkLayout(({x, y, t, isBelow}) => {
+  walkLayout(l => {
+    const x = l.x;
+    const y = l.y;
+    const t = l.t;
+    const isBelow = 'mount' in l && l.mount === 'belowClearPlate';
+
     if (!isBelow) {
       return;
     }
@@ -51,7 +56,12 @@ export function clearPlate() {
   });
 
   // If above plate's buttons close to the edge, increase clear plate size
-  walkLayout(({x, y, t, isBelow}) => {
+  walkLayout(l => {
+    const x = l.x;
+    const y = l.y;
+    const t = l.t;
+    const isBelow = 'mount' in l && l.mount === 'belowClearPlate';
+
     if (isBelow) {
       return;
     }

@@ -9,6 +9,7 @@ export enum LayerName {
   m4Countersunk = 'm4 Countersunk',
   topPlateBorder = 'Top Plate Border',
   bottomPlateBorder = 'Bottom Plate Border',
+  artworkReference = 'Artwork Reference',
 }
 
 export enum LayerColor {
@@ -38,6 +39,7 @@ const layerOptions = {
   [LayerName.m4Countersunk]: LayerColor.red,
   [LayerName.topPlateBorder]: LayerColor.fuchsia,
   [LayerName.bottomPlateBorder]: LayerColor.fuchsia,
+  [LayerName.artworkReference]: LayerColor.yellow,
 } as const;
 
 export const dxfLayerOptions = (() => {
