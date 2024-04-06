@@ -51,7 +51,7 @@ function tJoint({size, isCenter}: {size: ScrewSize; isCenter: boolean}) {
   const h = s.sideToSide;
 
   const largeNumber = 60;
-  const safeNumber = 5;
+  const safeNumber = 7;
 
   const hole = new models.Rectangle(largeNumber, s.holeRadius);
   model.moveRelative(hole, [safeNumber, h / 2]);

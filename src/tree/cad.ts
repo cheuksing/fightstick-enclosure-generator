@@ -4,6 +4,8 @@ import {type Config} from '@schema';
 import {dxfLayerOptions, svgLayerOptions} from '@helpers/color';
 import {type ModelTree} from './model';
 
+const isEmpty = (object: Record<string, unknown>) => Object.keys(object).length === 0;
+
 export function cadModelTree(tree: ModelTree, config: Config) {
   const m: IModel = {};
 
@@ -60,7 +62,7 @@ export function cadModelTree(tree: ModelTree, config: Config) {
     }
   }
 
-  if (tree.models.sidePlates.models.left && tree.models.sidePlates.models.right) {
+  if (!isEmpty(tree.models.sidePlates.models.left) && !isEmpty(tree.models.sidePlates.models.right)) {
     const leftSidePlate = model.clone(tree.models.sidePlates.models.left);
     const rightSidePlate = model.clone(tree.models.sidePlates.models.right);
 
