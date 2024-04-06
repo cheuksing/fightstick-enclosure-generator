@@ -3,6 +3,7 @@ import {type IModel, model, models, paths, type IPoint} from 'makerjs';
 type Button = {
   holeRadius: number;
   outerRadius: number;
+  nutRadius: number;
 };
 
 export type ButtonType = 'obsf24' | 'obsf30';
@@ -10,11 +11,13 @@ export type ButtonType = 'obsf24' | 'obsf30';
 const obsf24: Button = {
   outerRadius: 27.2 / 2,
   holeRadius: 24 / 2,
+  nutRadius: 29.5 / 2,
 };
 
 const obsf30: Button = {
   holeRadius: 30 / 2,
   outerRadius: 33.2 / 2,
+  nutRadius: 36 / 2,
 };
 
 export const buttonSpec: Record<ButtonType, Button> = {

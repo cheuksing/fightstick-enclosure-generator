@@ -136,16 +136,18 @@ export function sidePlates(isFrontBackMerged: boolean) {
   const y = ext.height / 2;
   const closestScrewX = cornerScrewPositions.frontLeft.top[0];
   const cornerX = closestScrewX - front.origin[0] + conrerScrewMagicNumber;
-  const startX = cornerX + buttonSpec.obsf24.outerRadius + safeNumber;
+  const startX = cornerX + buttonSpec.obsf24.nutRadius + safeNumber;
 
   const buttonPts = [];
 
+  const dist = (buttonSpec.obsf24.nutRadius * 2) + 2;
+
   for (let i = 0; i < leftOptionButtonsNumber; i++) {
-    buttonPts.push([startX + (i * 30), -y]);
+    buttonPts.push([startX + (i * dist), -y]);
   }
 
   for (let i = 0; i < rightOptionButtonsNumber; i++) {
-    buttonPts.push([ext.width - startX - (i * 30), -y]);
+    buttonPts.push([ext.width - startX - (i * dist), -y]);
   }
 
   front.models.buttons = buttons({
