@@ -25,6 +25,7 @@ export function BuildModelWorker({config, onTreeChange}: BuildModelWorkerProps) 
 
       const {config, computedConfig, tree} = data;
       setComputedConfig({changedConfig: config, computedConfig});
+      // Console.log('Computed config:', computedConfig);
       onTreeChange(tree);
     };
 

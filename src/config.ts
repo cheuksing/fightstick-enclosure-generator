@@ -29,11 +29,9 @@ export function getCornerScrewPositions(config: Config, option: {
   const {clearPlateScrewOffset, borders} = config;
   const {clearPlateScrewPositions} = option;
 
-  const safeNumber = 2;
-
   function frontLeftCornerScrew() {
-    const x = clearPlateScrewPositions.frontLeft[0] + safeNumber;
-    const y = clearPlateScrewPositions.frontLeft[1] - safeNumber;
+    const x = clearPlateScrewPositions.frontLeft[0];
+    const y = clearPlateScrewPositions.frontLeft[1];
 
     const bottom1X = x + (conrerScrewMagicNumber * 2);
     const bottom2X = x;
@@ -48,8 +46,8 @@ export function getCornerScrewPositions(config: Config, option: {
   }
 
   function frontRightCornerScrew() {
-    const x = clearPlateScrewPositions.frontRight[0] - safeNumber;
-    const y = clearPlateScrewPositions.frontRight[1] - safeNumber;
+    const x = clearPlateScrewPositions.frontRight[0];
+    const y = clearPlateScrewPositions.frontRight[1];
 
     const bottom1X = x - (conrerScrewMagicNumber * 2);
     const bottom2X = x;
