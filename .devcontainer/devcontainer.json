@@ -1,0 +1,17 @@
+{
+  "name": "Fightstick Enclosure Generator",
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "features": {
+    "ghcr.io/devcontainers/features/node": {
+      "version": "22.15.0",
+      "pnpmVersion": "10.10.0"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": []
+    }
+  },
+  "postCreateCommand": "pnpm install"
+}

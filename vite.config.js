@@ -47,6 +47,9 @@ export default defineConfig({
       plugins: [dxfPlugin()],
     },
   },
+  server: {
+    host: '0.0.0.0'
+  },
   worker: {
     plugins: () => [tsconfigPaths()],
   },
