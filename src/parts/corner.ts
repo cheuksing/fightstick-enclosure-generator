@@ -1,4 +1,4 @@
-import {model, models, type IModel, type IPoint} from 'makerjs';
+import {model, models, paths, type IModel, type IPoint} from 'makerjs';
 import {getConfig} from '@config';
 import {common} from './common';
 import {sidePlatesVertical} from './side-plate';
@@ -69,12 +69,19 @@ function frontLeftHorizontalScrews(layerIdx: number, originalBorder: IModel, axi
   return originalBorder;
 }
 
-function frontLeftCorner(layerIdx: number) {
+function frontLeftCorner(layerIdx: number, isClearPlateEnabled: boolean) {
   const {height} = getConfig();
 
   const [w, h] = frontLeftBox();
 
-  const rect = new models.Rectangle(w, h);
+  const rect: IModel = isClearPlateEnabled ? new models.Rectangle(w, h) : {
+    paths: {
+      // Quarter circle with right bottom corner
+      top: new paths.Line([0, w], [w, w]),
+      left: new paths.Line([0, w], [0, 0]),
+      arc: new paths.Arc([0, w], w, 270, 0),
+    },
+  };
 
   model.moveRelative(rect, [0, height - h]);
 
@@ -163,12 +170,19 @@ function backLeftHorizontalScrews(layerIdx: number, originalBorder: IModel, axis
   return originalBorder;
 }
 
-function backLeftCorner(layerIdx: number) {
+function backLeftCorner(layerIdx: number, isClearPlateEnabled: boolean) {
   const [w, h] = backLeftBox();
 
-  const rect = new models.Rectangle(w, h);
+  const box: IModel = isClearPlateEnabled ? new models.Rectangle(w, h) : {
+    paths: {
+      // Quarter circle with right top corner
+      arc: new paths.Arc([0, 0], w, 0, 90),
+      left: new paths.Line([0, 0], [0, w]),
+      bottom: new paths.Line([0, 0], [w, 0]),
+    },
+  };
 
-  let border: IModel = rect;
+  let border: IModel = box;
   border = backLeftHorizontalScrews(layerIdx, border, 'xy');
   border = model.combineSubtraction(border, sidePlatesVertical());
   border = model.combineIntersection(border, common());
@@ -250,7 +264,7 @@ type AllCornersModel = {
 } & IModel;
 
 export function corners(): AllCornersModel {
-  const {requriedCornerLayers, height, mergeFrontBackCorners} = getConfig();
+  const {requriedCornerLayers, height, mergeFrontBackCorners, isClearPlateEnabled} = getConfig();
 
   const m: AllCornersModel = {
     models: {},
@@ -273,8 +287,8 @@ export function corners(): AllCornersModel {
         },
       };
     } else {
-      const fl = frontLeftCorner(i);
-      const bl = backLeftCorner(i);
+      const fl = frontLeftCorner(i, isClearPlateEnabled);
+      const bl = backLeftCorner(i, isClearPlateEnabled);
 
       corners = {
         models: {
