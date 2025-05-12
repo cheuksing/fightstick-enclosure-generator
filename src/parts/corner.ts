@@ -16,15 +16,15 @@ function frontLeftBox() {
 }
 
 function frontLeftVerticalScrews(layerIdx: number) {
-  const {cornerScrewPositions, clearPlateScrewPositions, isClearPlateBackScrewCloserToBackThanFront, requriedCornerLayers} = getConfig();
+  const {cornerScrewPositions, clearPlateScrewPositions, isClearPlateBackScrewCloserToBackThanFront, requriedCornerLayers, isClearPlateEnabled} = getConfig();
 
   const m4 = screwHoles({
     points: [
       (layerIdx !== 0) && cornerScrewPositions.frontLeft.bottom1,
       (layerIdx !== 0) && cornerScrewPositions.frontLeft.bottom2,
-      (layerIdx !== requriedCornerLayers - 1) && cornerScrewPositions.frontLeft.top,
-      (layerIdx !== 0) && clearPlateScrewPositions.frontLeft,
-      (layerIdx !== 0) && !isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
+      (layerIdx !== requriedCornerLayers - 1) && (isClearPlateEnabled ? cornerScrewPositions.frontLeft.top : clearPlateScrewPositions.frontLeft),
+      (isClearPlateEnabled && layerIdx !== 0) && clearPlateScrewPositions.frontLeft,
+      (isClearPlateEnabled && layerIdx !== 0) && !isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
     ].filter(Boolean) as IPoint[],
     size: 'm4',
   });
@@ -33,9 +33,9 @@ function frontLeftVerticalScrews(layerIdx: number) {
     points: [
       (layerIdx === 0) && cornerScrewPositions.frontLeft.bottom1,
       (layerIdx === 0) && cornerScrewPositions.frontLeft.bottom2,
-      (layerIdx === requriedCornerLayers - 1) && cornerScrewPositions.frontLeft.top,
-      (layerIdx === 0) && clearPlateScrewPositions.frontLeft,
-      (layerIdx === 0) && !isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
+      (layerIdx === requriedCornerLayers - 1) && (isClearPlateEnabled ? cornerScrewPositions.frontLeft.top : clearPlateScrewPositions.frontLeft),
+      (isClearPlateEnabled && layerIdx === 0) && clearPlateScrewPositions.frontLeft,
+      (isClearPlateEnabled && layerIdx === 0) && !isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
     ].filter(Boolean) as IPoint[],
     size: 'm4',
   });
@@ -110,14 +110,14 @@ function backLeftBox() {
 }
 
 function backLeftVerticalScrews(layerIdx: number) {
-  const {cornerScrewPositions, isClearPlateBackScrewCloserToBackThanFront, clearPlateScrewPositions, requriedCornerLayers} = getConfig();
+  const {cornerScrewPositions, isClearPlateBackScrewCloserToBackThanFront, clearPlateScrewPositions, requriedCornerLayers, isClearPlateEnabled} = getConfig();
 
   const m4 = screwHoles({
     points: [
       (layerIdx !== 0) && cornerScrewPositions.backLeft.bottom1,
       (layerIdx !== 0) && cornerScrewPositions.backLeft.bottom2,
-      (layerIdx !== requriedCornerLayers - 1) && cornerScrewPositions.backLeft.top,
-      (layerIdx !== 0) && isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
+      (layerIdx !== requriedCornerLayers - 1) && (isClearPlateEnabled ? cornerScrewPositions.backLeft.top : clearPlateScrewPositions.backLeft),
+      (isClearPlateEnabled && layerIdx !== 0) && isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
     ].filter(Boolean) as IPoint[],
     size: 'm4',
   });
@@ -126,8 +126,8 @@ function backLeftVerticalScrews(layerIdx: number) {
     points: [
       (layerIdx === 0) && cornerScrewPositions.backLeft.bottom1,
       (layerIdx === 0) && cornerScrewPositions.backLeft.bottom2,
-      (layerIdx === requriedCornerLayers - 1) && cornerScrewPositions.backLeft.top,
-      (layerIdx === 0) && isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
+      (layerIdx === requriedCornerLayers - 1) && (isClearPlateEnabled ? cornerScrewPositions.backLeft.top : clearPlateScrewPositions.backLeft),
+      (isClearPlateEnabled && layerIdx === 0) && isClearPlateBackScrewCloserToBackThanFront && clearPlateScrewPositions.backLeft,
     ].filter(Boolean) as IPoint[],
     size: 'm4',
   });

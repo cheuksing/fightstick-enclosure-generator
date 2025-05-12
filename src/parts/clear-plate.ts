@@ -8,7 +8,11 @@ import {buttonSpec} from '@parts/sanwa';
 export function clearPlate() {
   const config = getConfig();
 
-  const {clearPlateWidth, clearPlateHeight, innerRadius, clearPlateScrewPositions} = config;
+  const {clearPlateWidth, clearPlateHeight, innerRadius, clearPlateScrewPositions, isClearPlateEnabled} = config;
+
+  if (!isClearPlateEnabled) {
+    return undefined;
+  }
 
   const dimension = new models.Rectangle(clearPlateWidth, clearPlateHeight);
   let temporary = model.clone(dimension);

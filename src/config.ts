@@ -103,8 +103,23 @@ export function getCornerScrewPositions(config: Config, option: {
   };
 }
 
-export function computeConfig(config: Config) {
-  const {width, height, borders, palmRest, clearPlateThickness, cornersPlateThickness, minDepth} = config;
+function preComputeConfig(config: Config) {
+  const modifiedConfig = {...config};
+  const isClearPlateEnabled = config.clearPlateThickness > 0;
+
+  if (!isClearPlateEnabled) {
+    modifiedConfig.palmRest = 0;
+  }
+
+  return {
+    ...modifiedConfig,
+    isClearPlateEnabled,
+  };
+}
+
+export function computeConfig(_config: Config) {
+  const config = preComputeConfig(_config);
+  const {width, height, borders, clearPlateThickness, cornersPlateThickness, minDepth, palmRest, isClearPlateEnabled} = config;
 
   const centerX = width / 2;
   const centerY = height / 2;
@@ -166,6 +181,7 @@ export function computeConfig(config: Config) {
     sidePlateScrewLayers,
     isClearPlateBackScrewCloserToCenterThanCornerScrew,
     isClearPlateBackScrewCloserToBackThanFront,
+    isClearPlateEnabled,
   };
 }
 

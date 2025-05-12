@@ -11,7 +11,11 @@ const buffer = 3;
 export function artworkReference() {
   const config = getConfig();
 
-  const {clearPlateWidth, clearPlateHeight, innerRadius, clearPlateScrewPositions} = config;
+  const {clearPlateWidth, clearPlateHeight, innerRadius, clearPlateScrewPositions, isClearPlateEnabled} = config;
+
+  if (!isClearPlateEnabled) {
+    return undefined;
+  }
 
   const width = clearPlateWidth - (buffer * 2);
   const height = clearPlateHeight - (buffer * 2);

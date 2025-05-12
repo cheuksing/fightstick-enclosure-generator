@@ -5,14 +5,20 @@ import {layout} from '@helpers/layout';
 import {LayerName} from '@helpers/color';
 
 export function topPlate() {
-  const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest, clearPlateScrewPositions} = getConfig();
+  const {width, clearPlateHeight, cornerScrewPositions, borders, palmRest, clearPlateScrewPositions, isClearPlateEnabled} = getConfig();
 
-  const screws = [
-    cornerScrewPositions.backLeft.top,
-    cornerScrewPositions.backRight.top,
-    cornerScrewPositions.frontLeft.top,
-    cornerScrewPositions.frontRight.top,
-  ];
+  const screws = isClearPlateEnabled
+    ? [
+      cornerScrewPositions.backLeft.top,
+      cornerScrewPositions.backRight.top,
+      cornerScrewPositions.frontLeft.top,
+      cornerScrewPositions.frontRight.top,
+    ] : [
+      clearPlateScrewPositions.backLeft,
+      clearPlateScrewPositions.backRight,
+      clearPlateScrewPositions.frontLeft,
+      clearPlateScrewPositions.frontRight,
+    ];
 
   const border = common();
 
@@ -29,12 +35,15 @@ export function topPlate() {
         layer: LayerName.m4Countersunk,
       },
       m4: {
-        ...screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}),
         layer: LayerName.m4,
       },
       cutout: layout({relativeOrigin: [width / 2, dy], isClearPlate: false}),
     },
   };
+
+  if (isClearPlateEnabled) {
+    Object.assign(m.models.m4, screwHoles({points: Object.values(clearPlateScrewPositions), size: 'm4'}));
+  }
 
   return m;
 }
