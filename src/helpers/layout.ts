@@ -8,6 +8,7 @@ import {model, type IPoint} from 'makerjs';
 type DrawOptions = {
   relativeOrigin: IPoint;
   isClearPlate: boolean;
+  isClearPlateEnabled: boolean;
 };
 
 export function walkLayout(cb: (i: LayoutItem) => void) {
@@ -23,7 +24,7 @@ export function walkLayout(cb: (i: LayoutItem) => void) {
   }
 }
 
-export function layout({relativeOrigin, isClearPlate}: DrawOptions) {
+export function layout({relativeOrigin, isClearPlate, isClearPlateEnabled}: DrawOptions) {
   const obsf24Pts: IPoint[] = [];
   const obsf24BelowPlatePts: IPoint[] = [];
   const obsf30Pts: IPoint[] = [];
@@ -36,6 +37,8 @@ export function layout({relativeOrigin, isClearPlate}: DrawOptions) {
 
     if (t === 'obsf24') {
       const mount = item.mount;
+      // FIXME: belowClearPlate is not supported yet
+      // when belowClearPlate, hasSlot should be false
       (mount === 'belowClearPlate' ? obsf24BelowPlatePts : obsf24Pts).push([x, y]);
     }
 
@@ -53,8 +56,10 @@ export function layout({relativeOrigin, isClearPlate}: DrawOptions) {
     }
   });
 
-  const b1 = buttons({points: obsf24Pts, size: 'obsf24', isClearPlate, isAboveClearPlate: true});
-  const b2 = buttons({points: obsf30Pts, size: 'obsf30', isClearPlate, isAboveClearPlate: true});
+  const hasSlot = !isClearPlate && isClearPlateEnabled;
+
+  const b1 = buttons({points: obsf24Pts, size: 'obsf24', isClearPlate, isAboveClearPlate: true, hasSlot});
+  const b2 = buttons({points: obsf30Pts, size: 'obsf30', isClearPlate, isAboveClearPlate: true, hasSlot});
 
   const brookPcbsMounts = brookPcbsMountingHoles({points: brookPts});
   const s = sticks({points: stickPts, isClearPlate});
@@ -70,8 +75,8 @@ export function layout({relativeOrigin, isClearPlate}: DrawOptions) {
   };
 
   if (!isClearPlate) {
-    const b3 = buttons({points: obsf24BelowPlatePts, size: 'obsf24', isClearPlate, isAboveClearPlate: false});
-    const b4 = buttons({points: obsf30BelowPlate, size: 'obsf30', isClearPlate, isAboveClearPlate: false});
+    const b3 = buttons({points: obsf24BelowPlatePts, size: 'obsf24', isClearPlate, isAboveClearPlate: false, hasSlot});
+    const b4 = buttons({points: obsf30BelowPlate, size: 'obsf30', isClearPlate, isAboveClearPlate: false, hasSlot});
 
     model.addModel(m, b3, 'obsf24BelowPlatePts');
     model.addModel(m, b4, 'obsf30BelowPlate');

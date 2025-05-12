@@ -37,7 +37,7 @@ export function topPlate() {
       m4: {
         layer: LayerName.m4,
       },
-      cutout: layout({relativeOrigin: [width / 2, dy], isClearPlate: false}),
+      cutout: layout({relativeOrigin: [width / 2, dy], isClearPlate: false, isClearPlateEnabled}),
     },
   };
 

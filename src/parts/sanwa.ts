@@ -29,9 +29,10 @@ type ButtonOptions = {
   size: ButtonType;
   isClearPlate: boolean;
   isAboveClearPlate: boolean;
+  hasSlot: boolean;
 };
 
-function button({size, isClearPlate, isAboveClearPlate}: ButtonOptions) {
+function button({size, isClearPlate, isAboveClearPlate, hasSlot}: ButtonOptions) {
   const {holeRadius: ir, outerRadius: or} = buttonSpec[size];
 
   const hole: IModel = {
@@ -49,6 +50,10 @@ function button({size, isClearPlate, isAboveClearPlate}: ButtonOptions) {
 
   if (isClearPlate) {
     return isAboveClearPlate ? hole : outer;
+  }
+
+  if (!hasSlot) {
+    return hole;
   }
 
   const slotLength = (3 + ir) * 2;
@@ -69,15 +74,16 @@ type DrawOptions = {
   size: ButtonType;
   isClearPlate: boolean;
   isAboveClearPlate: boolean;
+  hasSlot: boolean;
 };
 
-export function buttons({points, size, isClearPlate, isAboveClearPlate}: DrawOptions) {
+export function buttons({points, size, isClearPlate, isAboveClearPlate, hasSlot}: DrawOptions) {
   const buttonHoles: IModel & {models: Record<string, IModel>} = {
     models: {},
   };
 
   for (const [i, point] of points.entries()) {
-    const b = button({size, isClearPlate, isAboveClearPlate});
+    const b = button({size, isClearPlate, isAboveClearPlate, hasSlot});
     model.move(b, point);
     buttonHoles.models[`buttonHole${i}`] = b;
   }
