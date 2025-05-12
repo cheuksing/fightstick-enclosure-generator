@@ -20,8 +20,8 @@ const editorTabs = [
 export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) => {
   const [currentTab, setCurrentTab] = useState(editorTabs[0].id);
   const [errors, setErrors] = useState<z.typeToFlattenedError<any> | undefined>();
-
-  const [value, onChange] = useState<Config>(presetConfig);
+  const [value, setValue] = useState<Config>(presetConfig);
+  const [remountKey, setRemountKey] = useState(0);
 
   const isInitialMount = useRef(true);
 
@@ -30,7 +30,8 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
       return;
     }
 
-    onChange(presetConfig);
+    setValue(presetConfig);
+    setRemountKey(previousKey => previousKey + 1); // Increment key to remount components
   }, [presetConfig]);
 
   useEffect(() => {
@@ -50,8 +51,8 @@ export const Editor: React.FC<EditorProps> = ({presetConfig, onConfigChange}) =>
       <Errors errors={errors} />
       <Tabs tabs={editorTabs} currentTab={currentTab} onTabChange={setCurrentTab} />
       <Suspense fallback={null}>
-        {currentTab === 'form' && <EditorForm config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
-        {currentTab === 'raw' && <EditorJson config={value} onConfigChange={onChange} onErrorsChange={setErrors} />}
+        {currentTab === 'form' && <EditorForm key={remountKey} config={value} onConfigChange={setValue} onErrorsChange={setErrors} />}
+        {currentTab === 'raw' && <EditorJson key={remountKey} config={value} onConfigChange={setValue} onErrorsChange={setErrors} />}
       </Suspense>
     </div>
   );
